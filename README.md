@@ -1,2 +1,2 @@
 # Web-application
-### Customer account information system in the bank
+### A system for managing information about customers and their bank accounts
