@@ -1,0 +1,26 @@
+<project name="Web-Application" default="SQLDB" basedir=".">
+    <description>Web Application for managing information about customers and their bank accounts</description>
+    <property name="driver" value="org.postgresql.Driver"/>
+    <property name="url" value="jdbc:postgresql://localhost:5433/"/>
+    <property name="user" value="postgres"/>
+    <property name="pass" value="1234"/>
+    <property name="classpath" value="postgresql-42.2.10.jar"/>
+
+    <target name="SQLDB">
+        <echo>Create database and init it</echo>
+        <sql driver="${driver}"
+            classpath="${classpath}"
+            url="${url}"
+            userid="${user}"
+            password="${pass}"
+            autocommit="true">
+            <transaction src="Create_DB.sql" />
+            <transaction src="Init_DB.sql" />
+            SELECT customers.name, accounts.balance
+            	FROM customers 
+            	INNER JOIN accounts USING (customer_id)
+            	INNER JOIN types_of_account USING(type_id)
+            WHERE types_of_account.name = 'light';
+        </sql>
+    </target>
+</project>
