@@ -1,4 +1,4 @@
-<project name="Web-Application" default="SQLDB" basedir=".">
+<project name="Web-Application" default="SQL" basedir=".">
     <description>Web Application for managing information about customers and their bank accounts</description>
     <property name="driver" value="org.postgresql.Driver"/>
     <property name="url" value="jdbc:postgresql://localhost:5433/"/>
@@ -6,7 +6,7 @@
     <property name="pass" value="1234"/>
     <property name="classpath" value="postgresql-42.2.10.jar"/>
 
-    <target name="SQLDB">
+    <target name="SQL">
         <echo>Create database and init it</echo>
         <sql driver="${driver}"
             classpath="${classpath}"
@@ -16,11 +16,17 @@
             autocommit="true">
             <transaction src="Create_DB.sql" />
             <transaction src="Init_DB.sql" />
-            SELECT customers.name, accounts.balance
-            	FROM customers 
-            	INNER JOIN accounts USING (customer_id)
-            	INNER JOIN types_of_account USING(type_id)
-            WHERE types_of_account.name = 'light';
+
+            SELECT * FROM departments;
+            SELECT * FROM types_of_account;
+            SELECT * FROM customers;
+            SELECT * FROM contacts;
+            SELECT * FROM accounts;
+            SELECT * FROM operations;
+
+            DROP TYPE IF EXISTS customer_type, operation_type, account_type CASCADE;
+			DROP TABLE IF EXISTS departments, accounts, operations, types_of_account, customers, contacts CASCADE;
+			
         </sql>
     </target>
 </project>
