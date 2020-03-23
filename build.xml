@@ -9,9 +9,18 @@
     <property name="name" value="Web-Bank"/>
     <property name="war.dir" value="war"/>
     <property name="db.dir" value="db"/>
-    <property name="lib.dir" value="lib"/>
-    <property name="weblib.dir" value="${war.dir}/WEB-INF/lib"/>
+    <property name="lib.dir" value="${war.dir}/lib"/>
+    <property name="classes.dir" value="${war.dir}/classes"/>
+    <property name="build.dir" value=".classes"/>
+    <property name="src.dir" value="src"/>
     <property file="build.properties"/>
+
+
+    <path id="master-classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
 
 
     <target name="usage">
@@ -23,12 +32,8 @@
         <echo message=""/>
         <echo message="clean     --> Clean output dirs"/>
         <echo message="build     --> Compile main Java sources and copy libraries"/>
-        <echo message="docs      --> Create complete Javadoc documentation"/>
-        <echo message="warfile   --> Build the web application archive"/>
-        <echo message="deploywar --> Deploy the web application archive"/>
         <echo message="setupDB   --> Initialize the database"/>
-        <echo message="tests     --> Run tests using initialized database"/>
-        <echo message="all       --> Clean, build, docs, warfile, tests"/>
+        <echo message="all       --> Clean, build"/>
         <echo message=""/>
     </target>
 
@@ -36,5 +41,57 @@
     <target name="setupDB">
         <ant antfile="${db.dir}/build.xml"/>
     </target>
+
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete file="${lib.dir}/${name}.jar" />
+        <delete>
+            <fileset dir="${lib.dir}">
+                <include name="*.xml"/>
+                <include name="*.properties"/>
+            </fileset>
+        </delete>
+    </target>
+
+
+    <target name="build">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${lib.dir}"/>
+        <javac destdir="${build.dir}" source="1.8" target="1.8"
+               debug="true" deprecation="false" optimize="false" failonerror="true">
+            <src path="${src.dir}"/>
+            <classpath refid="master-classpath"/>
+        </javac>
+        <patternset id="meta.files">
+            <include name="**/*.xml" />
+            <include name="**/*.properties" />
+        </patternset>
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}">
+                <patternset refid="meta.files" />
+            </fileset>
+        </copy>
+        <manifestclasspath property="lib.list" jarfile="${lib.dir}/${name}.jar">
+            <classpath refid="master-classpath"/>
+        </manifestclasspath>
+        <jar jarfile="${lib.dir}/${name}.jar" compress="true" basedir="${build.dir}">
+            <fileset dir="${build.dir}">
+                <include name="**/*"/>
+            </fileset>
+            <fileset dir="${classes.dir}">
+                <include name="*.xml"/>
+            </fileset>
+            <manifest>
+                <attribute name="Main-Class" value="org.Main.Main"/>
+                <attribute name="Class-Path" value="${lib.list}"/>
+            </manifest>
+        </jar>
+
+    </target>
+
+
+    <target name="all" depends="clean, build" />
+
 
 </project>

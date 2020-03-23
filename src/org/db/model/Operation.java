@@ -2,7 +2,7 @@ package org.db.model;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.util.Date;
+import java.sql.Date;
 
 
 public class Operation extends BaseEntity {

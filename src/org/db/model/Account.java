@@ -2,7 +2,7 @@ package org.db.model;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Date;
+import java.sql.Date;
 
 
 public class Account extends BaseEntity {

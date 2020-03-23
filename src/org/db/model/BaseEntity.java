@@ -2,14 +2,14 @@ package org.db.model;
 
 public class BaseEntity {
 
-    private Long id;
+    private Integer id;
 
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

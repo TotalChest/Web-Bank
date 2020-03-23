@@ -4,7 +4,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Date;
+import java.sql.Date;
 
 
 public class Customer extends BaseEntity {

@@ -1,7 +1,7 @@
 package org.db.model;
 
 
-public class Contacts extends BaseEntity {
+public class Contact extends BaseEntity {
 
     private Customer customer;
 
@@ -15,7 +15,7 @@ public class Contacts extends BaseEntity {
 
     private String email;
 
-    public Contacts() { };
+    public Contact() { };
 
     public Customer getCustomer() {
         return customer;
