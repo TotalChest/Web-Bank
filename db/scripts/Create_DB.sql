@@ -1,9 +1,9 @@
 DROP TYPE IF EXISTS customer_type, operation_type, account_type CASCADE;
 DROP TABLE IF EXISTS departments, accounts, operations, types_of_account, customers, contacts CASCADE;
 
-CREATE TYPE customer_type AS ENUM('individual', 'organization');
-CREATE TYPE operation_type AS ENUM('credit', 'debit');
-CREATE TYPE account_type AS ENUM('corporate', 'strict', 'common', 'light', 'reliable');
+CREATE TYPE customer_type AS ENUM('INDIVIDUAL', 'ORGANIZATION');
+CREATE TYPE operation_type AS ENUM('CREDIT', 'DEBIT');
+CREATE TYPE account_type AS ENUM('CORPORATE', 'STRICT', 'COMMON', 'LIGHT', 'RELIABLE');
 
 CREATE TABLE departments (
 	department_id SERIAL PRIMARY KEY,

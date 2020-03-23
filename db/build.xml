@@ -4,7 +4,6 @@
 
 
 	<target name="createDB">
-
 		<sql driver="${db.driver}"
 			classpath="${db.classpath}"
 			url="${db.url}"
@@ -12,15 +11,12 @@
 			password="${bd.password}"
 			onerror="continue"
 			autocommit="true"
-			src="${db.dir}/Create_DB.sql">
-
+			src="${db.dir}/scripts/Create_DB.sql">
 		</sql>
-
 	</target>
 
 
 	<target name="initDB">
-
 		<sql driver="${db.driver}"
 			classpath="${db.classpath}"
 			url="${db.url}"
@@ -28,15 +24,12 @@
 			password="${bd.password}"
 			onerror="continue"
 			autocommit="true"
-			src="${db.dir}/Init_DB.sql">
-
+			src="${db.dir}/scripts/Init_DB.sql">
 		</sql>
-		
 	</target>
 
 
 	<target name="selectDB">
-
 		<sql driver="${db.driver}"
 			classpath="${db.classpath}"
 			url="${db.url}"
@@ -44,15 +37,12 @@
 			password="${bd.password}"
 			onerror="continue"
 			autocommit="true"
-			src="${db.dir}/Select_DB.sql">
-
+			src="${db.dir}/scripts/Select_DB.sql">
 		</sql>
-		
 	</target>
 
 
 	<target name="dropDB">
-
 		<sql driver="${db.driver}"
 			classpath="${db.classpath}"
 			url="${db.url}"
@@ -60,10 +50,8 @@
 			password="${bd.password}"
 			onerror="continue"
 			autocommit="true"
-			src="${db.dir}/Drop_DB.sql">
-
+			src="${db.dir}/scripts/Drop_DB.sql">
 		</sql>
-		
 	</target>
 
 

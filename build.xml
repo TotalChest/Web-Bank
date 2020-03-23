@@ -1,19 +1,40 @@
 <?xml version="1.0"?>
 
-<project name="Web-Application" default="setupDB" basedir=".">
+<project name="Web-Application" default="usage" basedir=".">
 
 
     <description>Web Application for managing information about customers and their bank accounts</description>
 
 
+    <property name="name" value="Web-Bank"/>
+    <property name="war.dir" value="war"/>
+    <property name="db.dir" value="db"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="weblib.dir" value="${war.dir}/WEB-INF/lib"/>
     <property file="build.properties"/>
 
 
-    <target name="setupDB">
-
-        <ant antfile="${db.dir}/build.xml"/>
-   
+    <target name="usage">
+        <echo message=""/>
+        <echo message="build file"/>
+        <echo message="------------------------------------------------------"/>
+        <echo message=""/>
+        <echo message="Available targets are:"/>
+        <echo message=""/>
+        <echo message="clean     --> Clean output dirs"/>
+        <echo message="build     --> Compile main Java sources and copy libraries"/>
+        <echo message="docs      --> Create complete Javadoc documentation"/>
+        <echo message="warfile   --> Build the web application archive"/>
+        <echo message="deploywar --> Deploy the web application archive"/>
+        <echo message="setupDB   --> Initialize the database"/>
+        <echo message="tests     --> Run tests using initialized database"/>
+        <echo message="all       --> Clean, build, docs, warfile, tests"/>
+        <echo message=""/>
     </target>
 
+
+    <target name="setupDB">
+        <ant antfile="${db.dir}/build.xml"/>
+    </target>
 
 </project>
