@@ -55,7 +55,7 @@
 	</target>
 
 
-	<target name="all" depends="createDB, initDB, selectDB" />
+	<target name="all" depends="createDB, initDB" />
 
 
 </project>

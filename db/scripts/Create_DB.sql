@@ -41,7 +41,7 @@ CREATE TABLE types_of_account (
 
 CREATE TABLE customers (
 	customer_id SERIAL PRIMARY KEY,
-	type customer_type NOT NULL DEFAULT 'individual',
+	type customer_type NOT NULL DEFAULT 'INDIVIDUAL',
 	name VARCHAR(64) NOT NULL,
 	date_of_registration TIMESTAMP NOT NULL
 );

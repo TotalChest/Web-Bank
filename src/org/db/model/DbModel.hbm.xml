@@ -1,0 +1,85 @@
+<hibernate-mapping auto-import="true" default-lazy="false">
+    <class name="org.db.model.Account" table="accounts">
+        <id column="account_id" name="id" type="java.lang.Long">
+            <generator class="increment"/>
+        </id>
+        <property column="number" name="number" type="java.lang.String"/>
+        <property column="customer_id" name="customer" type="org.db.model.Customer"/>
+        <property column="balance" name="balance" type="java.lang.Float"/>
+        <property column="type_id" name="type" type="org.db.model.TypeOfAccount"/>
+        <property column="interest_account" name="interestAccount" type="org.db.model.Account"/>
+        <property column="department_id" name="department" type="org.db.model.Department"/>
+        <property column="date_of_start" name="date" type="import java.util.Date"/>
+        <set name="operationSet" inverse="true" cascade="all">
+            <key column="account_id"/>
+            <one-to-many class="org.db.model.Operation"/>
+        </set>
+    </class>
+
+    <class name="org.db.model.Contact" table="contacts">
+        <id column="contact_id" name="id" type="java.lang.Long">
+            <generator class="increment"/>
+        </id>
+        <property column="customer_id" name="customer" type="org.db.model.Customer"/>
+        <property column="name" name="name" type="java.lang.String"/>
+        <property column="surname" name="surname" type="java.lang.String"/>
+        <property column="adress" name="adress" type="java.lang.String"/>
+        <property column="phone_number" name="phoneNumber" type="java.lang.String"/>
+        <property column="e-mail" name="email" type="java.lang.String"/>
+    </class>
+
+    <class name="org.db.model.Customer" table="customers">
+        <id column="customer_id" name="id" type="java.lang.Long">
+            <generator class="increment"/>
+        </id>
+        <property column="type" name="type" type="org.hibernate.type.EnumType"/>
+        <many-to-one column="name" name="name" type="java.lang.String"/>
+        <property column="date_of_registration" name="dateOfRegistration" type="import java.util.Date"/>
+        <set name="accountSet" inverse="true" cascade="all">
+            <key column="customer_id"/>
+            <one-to-many class="org.db.model.Account"/>
+        </set>
+        <set name="contactSet" inverse="true" cascade="all">
+            <key column="customer_id"/>
+            <one-to-many class="org.db.model.Contact"/>
+        </set>
+    </class>
+
+    <class name="org.db.model.Department" table="departments">
+        <id column="department_id" name="id" type="java.lang.Long">
+            <generator class="increment"/>
+        </id>
+        <many-to-one column="name" name="name" type="java.lang.String"/>
+        <many-to-one column="adress" name="adress" type="java.lang.String"/>
+        <set name="accountSet" inverse="true" cascade="all">
+            <key column="department_id"/>
+            <one-to-many class="org.db.model.Account"/>
+        </set>
+    </class>
+
+    <class name="org.db.model.Operation" table="operations">
+        <id column="operation_id" name="id" type="java.lang.Long">
+            <generator class="increment"/>
+        </id>
+        <property column="account_id" name="account" type="org.db.model.Account"/>
+        <many-to-one column="operation" name="operation" type="org.hibernate.type.EnumType"/>
+        <many-to-one column="amount" name="amount" type="java.lang.Float"/>
+        <property column="date" name="date" type="import java.util.Date"/>
+    </class>
+
+    <class name="org.db.model.TypeOfAccount" table="types_of_account">
+        <id column="type_id" name="id" type="java.lang.Long">
+            <generator class="increment"/>
+        </id>
+        <many-to-one column="name" name="type" type="org.hibernate.type.EnumType"/>
+        <many-to-one column="yield" name="yield" type="java.lang.Float"/>
+        <many-to-one column="interval" name="interval" type="java.lang.Integer"/>
+        <many-to-one column="max_credit" name="maxCredit" type="java.lang.Integer"/>
+        <many-to-one column="max_debit" name="maxDebit" type="java.lang.Integer"/>
+        <set name="accountSet" inverse="true" cascade="all">
+            <key column="type_id"/>
+            <one-to-many class="org.db.model.Account"/>
+        </set>
+    </class>
+
+</hibernate-mapping>
