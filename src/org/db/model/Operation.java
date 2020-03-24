@@ -26,7 +26,7 @@ public class Operation extends BaseEntity {
         this.account = account;
     }
 
-    public OperationTtpe getOperation() {
+    public OperationType getOperation() {
         return operation;
     }
 

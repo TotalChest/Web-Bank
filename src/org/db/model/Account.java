@@ -9,19 +9,21 @@ public class Account extends BaseEntity {
 
     private String number;
 
-    private Cuctomer customer;
+    private Customer customer;
 
     private Float balance;
 
     private TypeOfAccount type;
 
-    private Accounts interestAccount;
+    private Account interestAccount;
 
     private Department department;
 
     private Date date;
 
     private Set<Operation> operationSet = new HashSet<>();
+
+    private Set<Account> accountSet = new HashSet<>();
 
     public Account() { };
 
@@ -65,7 +67,7 @@ public class Account extends BaseEntity {
         this.interestAccount = interestAccount;
     }
 
-    public Account getDepertment() {
+    public Department getDepartment() {
         return department;
     }
 
@@ -88,5 +90,13 @@ public class Account extends BaseEntity {
 
     public void setOperationSet(Set<Operation> operationSet) {
         this.operationSet = operationSet;
+    }
+
+    public Set<Account> getAccountSet() {
+        return accountSet;
+    }
+
+    public void setAccountSet(Set<Account> accountSet) {
+        this.accountSet = accountSet;
     }
 }

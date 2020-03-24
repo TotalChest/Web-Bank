@@ -13,6 +13,9 @@
     <property name="classes.dir" value="${war.dir}/classes"/>
     <property name="build.dir" value=".classes"/>
     <property name="src.dir" value="src"/>
+    <property name="testsrc.dir" value="test"/>
+    <property name="testbuild.dir" value=".testclasses"/>
+    <property name="testreports.dir" value="junit-reports"/>
     <property file="build.properties"/>
 
 
@@ -46,6 +49,8 @@
     <target name="clean">
         <delete dir="${build.dir}"/>
         <delete file="${lib.dir}/${name}.jar" />
+        <delete dir="${testbuild.dir}"/>
+        <delete dir="${testreports.dir}"/>
         <delete>
             <fileset dir="${lib.dir}">
                 <include name="*.xml"/>
@@ -58,7 +63,7 @@
     <target name="build">
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${lib.dir}"/>
-        <javac destdir="${build.dir}" source="1.8" target="1.8"
+        <javac destdir="${build.dir}" source="11" target="11"
                debug="true" deprecation="false" optimize="false" failonerror="true">
             <src path="${src.dir}"/>
             <classpath refid="master-classpath"/>
@@ -87,11 +92,49 @@
                 <attribute name="Class-Path" value="${lib.list}"/>
             </manifest>
         </jar>
+    </target>
 
+
+    <target name="run">
+        <java jar="${lib.dir}/${name}.jar" fork="true"/>
     </target>
 
 
     <target name="all" depends="clean, build" />
+
+
+    <target name="test">
+        <delete dir="${testbuild.dir}"/>
+        <mkdir dir="${testbuild.dir}"/>
+        <delete dir="${testreports.dir}"/>
+        <mkdir dir="${testreports.dir}"/>
+        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" debug="true" deprecation="true">
+            <classpath path="${build.dir}"/>
+            <classpath refid="master-classpath"/>
+        </javac>
+        <copy todir="${testbuild.dir}" preservelastmodified="true">
+            <fileset dir="${src.dir}">
+                <include name="**/*.xml"/>
+                <include name="**/*.properties"/>
+            </fileset>
+            <fileset dir="${testsrc.dir}">
+                <include name="**/*.xml"/>
+                <include name="**/*.properties"/>
+            </fileset>
+        </copy>
+        <junit printsummary="true" haltonfailure="no" haltonerror="no">
+            <classpath path="${build.dir}"/>
+            <classpath path="${testbuild.dir}"/>
+            <classpath refid="master-classpath"/>
+            <formatter type="brief"/>
+            <batchtest todir="${testreports.dir}">
+                <fileset dir="${testbuild.dir}">
+                    <include name="**/*Test*"/>
+                </fileset>
+            </batchtest>
+        </junit>
+        <ant antfile="${db.dir}/build.xml"/>
+    </target>
 
 
 </project>
