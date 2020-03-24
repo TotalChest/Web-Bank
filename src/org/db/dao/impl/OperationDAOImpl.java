@@ -14,20 +14,20 @@ import java.util.List;
 public class OperationDAOImpl implements OperationDAO {
     public List getAllOperations() throws SQLException {
         List operations;
-        operations = DAOHelpers.ExecuteInSession(session -> session.createCriteria(Operation.class).list(), false);
+        operations = DAOHelpers.ExecuteInSession(session -> session.createCriteria(Operation.class).list());
         return operations;
     }
 
     public Operation getOperationById(Integer operationId) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (Operation) session.load(Operation.class, operationId), false);
+        return DAOHelpers.ExecuteInSession(session -> (Operation) session.get(Operation.class, operationId));
     }
 
     public int addOperation(Operation w) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (int) session.save(w), true);
+        return DAOHelpers.ExecuteInSession(session -> (int) session.save(w));
     }
 
     public void updateOperation(Operation w) throws SQLException {
-        DAOHelpers.ExecuteInSessionVoidRet(session -> session.update(w), true);
+        DAOHelpers.ExecuteInSessionVoidRet(session -> session.update(w));
     }
 
     public void deleteOperation(Operation w) throws SQLException {
@@ -35,15 +35,17 @@ public class OperationDAOImpl implements OperationDAO {
             w.getAccount().getOperationSet().remove(w);
             session.save(w.getAccount());
             session.delete(w);
-        }, true);
+        });
     }
 
     public void deleteOperationById(int id) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
-            Operation w = (Operation) session.load(Operation.class, id);
-            w.getAccount().getOperationSet().remove(w);
-            session.save(w.getAccount());
-            session.delete(w);
-        }, true);
+            Operation w = (Operation) session.get(Operation.class, id);
+            if(w != null) {
+                w.getAccount().getOperationSet().remove(w);
+                session.save(w.getAccount());
+                session.delete(w);
+            }
+        });
     }
 }

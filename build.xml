@@ -63,7 +63,8 @@
     <target name="build">
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${lib.dir}"/>
-        <javac destdir="${build.dir}" source="11" target="11"
+        <mkdir dir="${classes.dir}"/>
+        <javac destdir="${build.dir}" source="11" target="11" includeantruntime="true"
                debug="true" deprecation="false" optimize="false" failonerror="true">
             <src path="${src.dir}"/>
             <classpath refid="master-classpath"/>
@@ -104,11 +105,12 @@
 
 
     <target name="test">
+        <ant antfile="${db.dir}/build.xml"/>
         <delete dir="${testbuild.dir}"/>
         <mkdir dir="${testbuild.dir}"/>
         <delete dir="${testreports.dir}"/>
         <mkdir dir="${testreports.dir}"/>
-        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" debug="true" deprecation="true">
+        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" debug="true" deprecation="true" includeantruntime="true">
             <classpath path="${build.dir}"/>
             <classpath refid="master-classpath"/>
         </javac>

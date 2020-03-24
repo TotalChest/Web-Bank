@@ -62,9 +62,4 @@ public class Customer extends BaseEntity {
         this.contactSet = contactSet;
     }
 
-   /*
-   public boolean matchesVacancy(Vacancy v) {
-        return v.matchesWorker(this);
-    }
-    */
 }

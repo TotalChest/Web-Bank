@@ -17,20 +17,20 @@ import java.util.List;
 public class AccountDAOImpl implements AccountDAO {
     public List getAllAccounts() throws SQLException {
         List accounts;
-        accounts = DAOHelpers.ExecuteInSession(session -> session.createCriteria(Account.class).list(), false);
+        accounts = DAOHelpers.ExecuteInSession(session -> session.createCriteria(Account.class).list());
         return accounts;
     }
 
     public Account getAccountById(Integer accountId) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (Account) session.load(Account.class, accountId), false);
+        return DAOHelpers.ExecuteInSession(session -> (Account) session.get(Account.class, accountId));
     }
 
     public int addAccount(Account w) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (int) session.save(w), true);
+        return DAOHelpers.ExecuteInSession(session -> (int) session.save(w));
     }
 
     public void updateAccount(Account w) throws SQLException {
-        DAOHelpers.ExecuteInSessionVoidRet(session -> session.update(w), true);
+        DAOHelpers.ExecuteInSessionVoidRet(session -> session.update(w));
     }
 
     public void deleteAccount(Account w) throws SQLException {
@@ -54,31 +54,33 @@ public class AccountDAOImpl implements AccountDAO {
             }
             w.getAccountSet().clear();
             session.delete(w);
-        }, true);
+        });
     }
 
     public void deleteAccountById(int id) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
-            Account w = (Account) session.load(Account.class, id);
-            w.getCustomer().getAccountSet().remove(w);
-            session.save(w.getCustomer());
-            w.getType().getAccountSet().remove(w);
-            session.save(w.getType());
-            w.getInterestAccount().getAccountSet().remove(w);
-            session.save(w.getInterestAccount());
-            w.getDepartment().getAccountSet().remove(w);
-            session.save(w.getDepartment());
-            for (Operation entry : w.getOperationSet()) {
-                entry.setAccount(null);
-                session.save(entry);
+            Account w = (Account) session.get(Account.class, id);
+            if(w != null) {
+                w.getCustomer().getAccountSet().remove(w);
+                session.save(w.getCustomer());
+                w.getType().getAccountSet().remove(w);
+                session.save(w.getType());
+                w.getInterestAccount().getAccountSet().remove(w);
+                session.save(w.getInterestAccount());
+                w.getDepartment().getAccountSet().remove(w);
+                session.save(w.getDepartment());
+                for (Operation entry : w.getOperationSet()) {
+                    entry.setAccount(null);
+                    session.save(entry);
+                }
+                w.getOperationSet().clear();
+                for (Account entry : w.getAccountSet()) {
+                    entry.setInterestAccount(null);
+                    session.save(entry);
+                }
+                w.getAccountSet().clear();
+                session.delete(w);
             }
-            w.getOperationSet().clear();
-            for (Account entry : w.getAccountSet()) {
-                entry.setInterestAccount(null);
-                session.save(entry);
-            }
-            w.getAccountSet().clear();
-            session.delete(w);
-        }, true);
+        });
     }
 }

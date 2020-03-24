@@ -15,20 +15,20 @@ import java.util.List;
 public class TypeOfAccountDAOImpl implements TypeOfAccountDAO {
     public List getAllTypesOfAccount() throws SQLException {
         List types;
-        types = DAOHelpers.ExecuteInSession(session -> session.createCriteria(TypeOfAccount.class).list(), false);
+        types = DAOHelpers.ExecuteInSession(session -> session.createCriteria(TypeOfAccount.class).list());
         return types;
     }
 
     public TypeOfAccount getTypeOfAccountById(Integer typeId) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (TypeOfAccount) session.load(TypeOfAccount.class, typeId), false);
+        return DAOHelpers.ExecuteInSession(session -> (TypeOfAccount) session.get(TypeOfAccount.class, typeId));
     }
 
     public int addTypeOfAccount(TypeOfAccount w) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (int) session.save(w), true);
+        return DAOHelpers.ExecuteInSession(session -> (int) session.save(w));
     }
 
     public void updateTypeOfAccount(TypeOfAccount w) throws SQLException {
-        DAOHelpers.ExecuteInSessionVoidRet(session -> session.update(w), true);
+        DAOHelpers.ExecuteInSessionVoidRet(session -> session.update(w));
     }
 
     public void deleteTypeOfAccount(TypeOfAccount w) throws SQLException {
@@ -39,19 +39,21 @@ public class TypeOfAccountDAOImpl implements TypeOfAccountDAO {
             }
             w.getAccountSet().clear();
             session.delete(w);
-        }, true);
+        });
     }
 
     public void deleteTypeOfAccountById(int id) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
-            TypeOfAccount w = (TypeOfAccount) session.load(TypeOfAccount.class, id);
-            for (Account entry : w.getAccountSet()) {
-                entry.setType(null);
-                session.save(entry);
+            TypeOfAccount w = (TypeOfAccount) session.get(TypeOfAccount.class, id);
+            if(w != null) {
+                for (Account entry : w.getAccountSet()) {
+                    entry.setType(null);
+                    session.save(entry);
+                }
+                w.getAccountSet().clear();
+                session.delete(w);
             }
-            w.getAccountSet().clear();
-            session.delete(w);
-        }, true);
+        });
     }
 }
 

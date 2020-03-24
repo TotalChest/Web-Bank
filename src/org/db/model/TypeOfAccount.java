@@ -63,9 +63,4 @@ public class TypeOfAccount extends BaseEntity {
         this.accountSet = accountSet;
     }
 
-   /*
-   public boolean matchesVacancy(Vacancy v) {
-        return v.matchesWorker(this);
-    }
-    */
 }

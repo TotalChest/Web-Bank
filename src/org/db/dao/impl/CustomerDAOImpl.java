@@ -16,20 +16,20 @@ import java.util.List;
 public class CustomerDAOImpl implements CustomerDAO {
     public List getAllCustomers() throws SQLException {
         List customers;
-        customers = DAOHelpers.ExecuteInSession(session -> session.createCriteria(Customer.class).list(), false);
+        customers = DAOHelpers.ExecuteInSession(session -> session.createCriteria(Customer.class).list());
         return customers;
     }
 
     public Customer getCustomerById(Integer customerId) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (Customer) session.load(Customer.class,customerId), false);
+        return DAOHelpers.ExecuteInSession(session -> (Customer) session.get(Customer.class,customerId));
     }
 
     public int addCustomer(Customer w) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (int) session.save(w), true);
+        return DAOHelpers.ExecuteInSession(session -> (int) session.save(w));
     }
 
     public void updateCustomer(Customer w) throws SQLException {
-        DAOHelpers.ExecuteInSessionVoidRet(session -> session.update(w), true);
+        DAOHelpers.ExecuteInSessionVoidRet(session -> session.update(w));
     }
 
     public void deleteCustomer(Customer w) throws SQLException {
@@ -45,23 +45,25 @@ public class CustomerDAOImpl implements CustomerDAO {
             }
             w.getContactSet().clear();
             session.delete(w);
-        }, true);
+        });
     }
 
     public void deleteCustomerById(int id) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
-            Customer w = (Customer) session.load(Customer.class, id);
-            for (Account entry : w.getAccountSet()) {
-                entry.setCustomer(null);
-                session.save(entry);
+            Customer w = (Customer) session.get(Customer.class, id);
+            if(w != null) {
+                for (Account entry : w.getAccountSet()) {
+                    entry.setCustomer(null);
+                    session.save(entry);
+                }
+                w.getAccountSet().clear();
+                for (Contact entry : w.getContactSet()) {
+                    entry.setCustomer(null);
+                    session.save(entry);
+                }
+                w.getContactSet().clear();
+                session.delete(w);
             }
-            w.getAccountSet().clear();
-            for (Contact entry : w.getContactSet()) {
-                entry.setCustomer(null);
-                session.save(entry);
-            }
-            w.getContactSet().clear();
-            session.delete(w);
-        }, true);
+        });
     }
 }

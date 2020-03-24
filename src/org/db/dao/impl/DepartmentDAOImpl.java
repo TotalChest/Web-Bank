@@ -16,20 +16,20 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 
     public List getAllDepartments() throws SQLException {
         List departments;
-        departments = DAOHelpers.ExecuteInSession(session -> session.createCriteria(Department.class).list(), false);
+        departments = DAOHelpers.ExecuteInSession(session -> session.createCriteria(Department.class).list());
         return departments;
     }
 
     public Department getDepartmentById(Integer departmentId) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (Department) session.load(Department.class, departmentId), false);
+        return DAOHelpers.ExecuteInSession(session -> (Department) session.get(Department.class, departmentId));
     }
 
     public int addDepartment(Department w) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (int) session.save(w), true);
+        return DAOHelpers.ExecuteInSession(session -> (int) session.save(w));
     }
 
     public void updateDepartment(Department w) throws SQLException {
-        DAOHelpers.ExecuteInSessionVoidRet(session -> session.update(w), true);
+        DAOHelpers.ExecuteInSessionVoidRet(session -> session.update(w));
     }
 
     public void deleteDepartment(Department w) throws SQLException {
@@ -40,18 +40,20 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             }
             w.getAccountSet().clear();
             session.delete(w);
-        }, true);
+        });
     }
 
     public void deleteDepartmentById(int id) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
-            Department w = (Department) session.load(Department.class, id);
-            for (Account entry : w.getAccountSet()) {
-                entry.setDepartment(null);
-                session.save(entry);
+            Department w = (Department) session.get(Department.class, id);
+            if(w != null) {
+                for (Account entry : w.getAccountSet()) {
+                    entry.setDepartment(null);
+                    session.save(entry);
+                }
+                w.getAccountSet().clear();
+                session.delete(w);
             }
-            w.getAccountSet().clear();
-            session.delete(w);
-        }, true);
+        });
     }
 }

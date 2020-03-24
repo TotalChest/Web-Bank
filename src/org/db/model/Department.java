@@ -37,9 +37,4 @@ public class Department extends BaseEntity {
         this.accountSet = accountSet;
     }
 
-   /*
-   public boolean matchesVacancy(Vacancy v) {
-        return v.matchesWorker(this);
-    }
-    */
 }

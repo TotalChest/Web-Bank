@@ -65,32 +65,4 @@ public class Contact extends BaseEntity {
         this.email = email;
     }
 
-    /*
-
-    public boolean matchesWorker(Worker w) {
-        boolean positionReq = prevPositionReq == null;
-        boolean companyReq = prevCompanyReq == null;
-        boolean workerMinSalaryReq = w.getMinSalaryReq() == null;
-        boolean workerPositionReq = w.getPositionReq() == null;
-        for (JobHistory history : w.getHistoryEntries()) {
-            if (!positionReq && history.getPosition().toLowerCase().equals(prevPositionReq.toLowerCase())) {
-                positionReq = true;
-            }
-            if (!companyReq && history.getCompany().getId().equals(prevCompanyReq.getId())) {
-                companyReq = true;
-            }
-            if (companyReq && positionReq) {
-                break;
-            }
-        }
-        System.out.println();
-        return w.getLookingForJob()
-                && (workerPositionReq || (w.getPositionReq().toLowerCase().equals(position.toLowerCase())))
-                && (workerMinSalaryReq || minSalary == null || minSalary <= w.getMinSalaryReq())
-                && (workerMinSalaryReq || maxSalary == null || maxSalary >= w.getMinSalaryReq())
-                && (minEducationLevel.getValue() <= w.getEducationLevel().getValue())
-                && positionReq && companyReq;
-    }
-
-     */
 }
