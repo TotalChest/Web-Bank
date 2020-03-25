@@ -31,6 +31,14 @@ public class TypeOfAccount extends BaseEntity {
         this.type = type;
     }
 
+    public Float getYield() {
+        return yield;
+    }
+
+    public void setYield(Float yield) {
+        this.yield = yield;
+    }
+
     public Integer getInterval() {
         return interval;
     }

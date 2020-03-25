@@ -30,7 +30,7 @@ public class Customer extends BaseEntity {
         this.name = name;
     }
 
-    public Date getDateOfRegistarion() {
+    public Date getDateOfRegistration() {
         return dateOfRegistration;
     }
 

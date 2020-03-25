@@ -64,7 +64,7 @@
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${lib.dir}"/>
         <mkdir dir="${classes.dir}"/>
-        <javac destdir="${build.dir}" source="11" target="11" includeantruntime="true"
+        <javac destdir="${build.dir}" source="1.8" target="1.8" includeantruntime="true"
                debug="true" deprecation="false" optimize="false" failonerror="true">
             <src path="${src.dir}"/>
             <classpath refid="master-classpath"/>
