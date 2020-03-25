@@ -4,14 +4,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.HashSet;
 import java.util.Set;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 
 public class Customer extends BaseEntity {
 
     private String name;
 
-    private Date dateOfRegistration;
+    private Timestamp dateOfRegistration;
 
     @Enumerated(EnumType.STRING)
     private CustomerType type;
@@ -30,11 +30,11 @@ public class Customer extends BaseEntity {
         this.name = name;
     }
 
-    public Date getDateOfRegistration() {
+    public Timestamp getDateOfRegistration() {
         return dateOfRegistration;
     }
 
-    public void setDateOfRegistration(Date dateOfRegistration)    {
+    public void setDateOfRegistration(Timestamp dateOfRegistration)    {
         this.dateOfRegistration = dateOfRegistration;
     }
 

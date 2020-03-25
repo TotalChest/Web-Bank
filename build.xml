@@ -101,7 +101,7 @@
     </target>
 
 
-    <target name="all" depends="clean, build" />
+    <target name="all" depends="clean, setupDB, build" />
 
 
     <target name="test">

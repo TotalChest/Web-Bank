@@ -21,7 +21,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     public Customer getCustomerById(Integer customerId) throws SQLException {
-        return DAOHelpers.ExecuteInSession(session -> (Customer) session.get(Customer.class,customerId));
+        return DAOHelpers.ExecuteInSession(session -> (Customer) session.get(Customer.class, customerId));
     }
 
     public int addCustomer(Customer w) throws SQLException {
@@ -36,12 +36,12 @@ public class CustomerDAOImpl implements CustomerDAO {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
             for (Account entry : w.getAccountSet()) {
                 entry.setCustomer(null);
-                session.save(entry);
+                session.update(entry);
             }
             w.getAccountSet().clear();
             for (Contact entry : w.getContactSet()) {
                 entry.setCustomer(null);
-                session.save(entry);
+                session.update(entry);
             }
             w.getContactSet().clear();
             session.delete(w);
@@ -54,16 +54,16 @@ public class CustomerDAOImpl implements CustomerDAO {
             if(w != null) {
                 for (Account entry : w.getAccountSet()) {
                     entry.setCustomer(null);
-                    session.save(entry);
+                    session.update(entry);
                 }
                 w.getAccountSet().clear();
                 for (Contact entry : w.getContactSet()) {
                     entry.setCustomer(null);
-                    session.save(entry);
+                    session.update(entry);
                 }
                 w.getContactSet().clear();
-                session.delete(w);
             }
+            session.delete(w);
         });
     }
 }

@@ -2,7 +2,7 @@ package org.db.model;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 
 public class Operation extends BaseEntity {
@@ -14,7 +14,7 @@ public class Operation extends BaseEntity {
 
     private Float amount;
 
-    private Date date;
+    private Timestamp date;
 
     public Operation() { }
 
@@ -42,11 +42,11 @@ public class Operation extends BaseEntity {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date)
+    public void setDate(Timestamp date)
     {
         this.date = date;
     }

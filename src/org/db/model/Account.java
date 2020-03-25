@@ -2,7 +2,7 @@ package org.db.model;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 
 public class Account extends BaseEntity {
@@ -19,7 +19,7 @@ public class Account extends BaseEntity {
 
     private Department department;
 
-    private Date date;
+    private Timestamp date;
 
     private Set<Operation> operationSet = new HashSet<>();
 
@@ -75,11 +75,11 @@ public class Account extends BaseEntity {
         this.department = department;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date)
+    public void setDate(Timestamp date)
     {
         this.date = date;
     }

@@ -12,12 +12,12 @@
         <many-to-one column="type_id" name="type" class="org.db.model.TypeOfAccount"/>
         <many-to-one column="interest_account" name="interestAccount" class="org.db.model.Account"/>
         <many-to-one column="department_id" name="department" class="org.db.model.Department"/>
-        <property column="date_of_start" name="date" type="java.sql.Date"/>
-        <set name="operationSet" inverse="true" cascade="all" lazy="true">
+        <property column="date_of_start" name="date" type="java.sql.Timestamp"/>
+        <set name="operationSet" inverse="true" cascade="all" lazy="false">
             <key column="account_id"/>
             <one-to-many class="org.db.model.Operation"/>
         </set>
-        <set name="accountSet" inverse="true" cascade="all" lazy="true">
+        <set name="accountSet" inverse="true" cascade="all" lazy="false">
             <key column="account_id"/>
             <one-to-many class="org.db.model.Account"/>
         </set>
@@ -32,7 +32,7 @@
         <property column="surname" name="surname" type="java.lang.String"/>
         <property column="adress" name="adress" type="java.lang.String"/>
         <property column="phone_number" name="phoneNumber" type="java.lang.String"/>
-        <property column="e-mail" name="email" type="java.lang.String"/>
+        <property column="email" name="email" type="java.lang.String"/>
     </class>
 
     <class name="org.db.model.Customer" table="customers">
@@ -40,12 +40,12 @@
             <generator class="increment"/>
         </id>
         <property column="name" name="name" type="java.lang.String"/>
-        <property column="date_of_registration" name="dateOfRegistration" type="java.sql.Date"/>
-        <set name="accountSet" inverse="true" cascade="all" lazy="true">
+        <property column="date_of_registration" name="dateOfRegistration" type="java.sql.Timestamp"/>
+        <set name="accountSet" inverse="true" cascade="all" lazy="false">
             <key column="customer_id"/>
             <one-to-many class="org.db.model.Account"/>
         </set>
-        <set name="contactSet" inverse="true" cascade="all" lazy="true">
+        <set name="contactSet" inverse="true" cascade="all" lazy="false">
             <key column="customer_id"/>
             <one-to-many class="org.db.model.Contact"/>
         </set>
@@ -57,7 +57,7 @@
         </id>
         <property column="name" name="name" type="java.lang.String"/>
         <property column="adress" name="adress" type="java.lang.String"/>
-        <set name="accountSet" inverse="true" cascade="all" lazy="true">
+        <set name="accountSet" inverse="true" cascade="all" lazy="false">
             <key column="department_id"/>
             <one-to-many class="org.db.model.Account"/>
         </set>
@@ -69,7 +69,7 @@
         </id>
         <many-to-one column="account_id" name="account" class="org.db.model.Account"/>
         <property column="amount" name="amount" type="java.lang.Float"/>
-        <property column="date" name="date" type="java.sql.Date"/>
+        <property column="date" name="date" type="java.sql.Timestamp"/>
     </class>
 
     <class name="org.db.model.TypeOfAccount" table="types_of_account">
@@ -80,7 +80,7 @@
         <property column="interval" name="interval" type="java.lang.Integer"/>
         <property column="max_credit" name="maxCredit" type="java.lang.Integer"/>
         <property column="max_debit" name="maxDebit" type="java.lang.Integer"/>
-        <set name="accountSet" inverse="true" cascade="all">
+        <set name="accountSet" inverse="true" cascade="all" lazy="false">
             <key column="type_id"/>
             <one-to-many class="org.db.model.Account"/>
         </set>

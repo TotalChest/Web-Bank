@@ -36,7 +36,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
             for (Account entry : w.getAccountSet()) {
                 entry.setDepartment(null);
-                session.save(entry);
+                session.update(entry);
             }
             w.getAccountSet().clear();
             session.delete(w);
@@ -49,11 +49,11 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             if(w != null) {
                 for (Account entry : w.getAccountSet()) {
                     entry.setDepartment(null);
-                    session.save(entry);
+                    session.update(entry);
                 }
                 w.getAccountSet().clear();
-                session.delete(w);
             }
+            session.delete(w);
         });
     }
 }

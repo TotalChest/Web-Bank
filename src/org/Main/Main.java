@@ -12,10 +12,22 @@ public class Main {
         DAOFactory factory = DAOFactory.getInstance();
         if(factory != null){
             System.out.println("DAOFactory done.");
-            Account acc = factory.getAccountDAO().getAccountById(2);
-            System.out.println(acc.getNumber());
-            System.out.println(acc.getBalance());
-            System.out.println(acc.getDate());
+            AccountDAO accountDAO = factory.getAccountDAO();
+            Account a = (Account) accountDAO.getAccountById(8);
+            System.out.println(accountDAO.getAllAccounts().size());
+            accountDAO.deleteAccount(a);
+            System.out.println(accountDAO.getAllAccounts().size());
+           // accountDAO.deleteAccount(accountDAO.getAccountById(3));
+            //System.out.println(accountDAO.getAllAccounts().size());
+            /*int id = o.getId();
+            System.out.println(id);
+            int oldSize = operationDAO.getAllOperations().size();
+            operationDAO.deleteOperationById(id);
+            int newSize = operationDAO.getAllOperations().size();
+            System.out.println(operationDAO.getOperationById(id));
+            System.out.println(newSize);
+            //Assert.assertNull(contactDAO.getContactById(id));
+            //Assert.assertEquals(newSize, oldSize - 1);*/
         }
     }
 }

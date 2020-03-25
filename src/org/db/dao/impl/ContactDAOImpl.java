@@ -34,7 +34,7 @@ public class ContactDAOImpl implements ContactDAO {
     public void deleteContact(Contact w) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
             w.getCustomer().getContactSet().remove(w);
-            session.save(w.getCustomer());
+            session.update(w.getCustomer());
             session.delete(w);
         });
     }
@@ -44,9 +44,9 @@ public class ContactDAOImpl implements ContactDAO {
             Contact w = (Contact) session.get(Contact.class, id);
             if(w != null) {
                 w.getCustomer().getContactSet().remove(w);
-                session.save(w.getCustomer());
-                session.delete(w);
+                session.update(w.getCustomer());
             }
+            session.delete(w);
         });
     }
 }

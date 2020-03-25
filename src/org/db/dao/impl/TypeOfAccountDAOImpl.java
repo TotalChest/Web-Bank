@@ -35,7 +35,7 @@ public class TypeOfAccountDAOImpl implements TypeOfAccountDAO {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
             for (Account entry : w.getAccountSet()) {
                 entry.setType(null);
-                session.save(entry);
+                session.update(entry);
             }
             w.getAccountSet().clear();
             session.delete(w);
@@ -48,11 +48,11 @@ public class TypeOfAccountDAOImpl implements TypeOfAccountDAO {
             if(w != null) {
                 for (Account entry : w.getAccountSet()) {
                     entry.setType(null);
-                    session.save(entry);
+                    session.update(entry);
                 }
                 w.getAccountSet().clear();
-                session.delete(w);
             }
+            session.delete(w);
         });
     }
 }

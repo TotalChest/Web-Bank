@@ -3,7 +3,6 @@ package org.db.model;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class Department extends BaseEntity {
 
     private String name;
