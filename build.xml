@@ -96,7 +96,7 @@
     </target>
 
 
-    <target name="run">
+    <target name="run" depends="all">
         <java jar="${lib.dir}/${name}.jar" fork="true"/>
     </target>
 
@@ -104,8 +104,7 @@
     <target name="all" depends="clean, setupDB, build" />
 
 
-    <target name="test">
-        <ant antfile="${db.dir}/build.xml"/>
+    <target name="test" depends="all">
         <delete dir="${testbuild.dir}"/>
         <mkdir dir="${testbuild.dir}"/>
         <delete dir="${testreports.dir}"/>
