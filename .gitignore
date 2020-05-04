@@ -1,4 +1,4 @@
 Web-application.iml
 .idea/
-.classes/
-.testclasses/
+build/
+report/

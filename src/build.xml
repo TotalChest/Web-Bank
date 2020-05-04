@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<project name="Build" default="all" basedir=".">
+
+    <property file="../build.properties"/>
+
+    <target name="all" depends="build" />
+
+    <path id = "classpath.master">
+        <fileset dir = "${lib.dir}">
+            <include name = "*.jar"/>
+        </fileset>
+        <pathelement path = "${build.dir}"/>
+    </path>
+
+    <target name = "build">
+        <mkdir dir = "${build.dir}"/>
+        <copy file="${src.dir}/hibernate.cfg.xml" todir="${build.dir}"/>
+        <copy file="${src.dir}/model/DbModel.hbm.xml" todir="${build.dir}/model"/>
+
+        <!--
+        <copy file = "${test.dir}/testng.xml" todir = "${build.dir}/test"/>
+        <copy file = "${src.dir}/selenium/testng.xml" todir = "${build.dir}/selenium"/>
+-->
+
+        <javac includeantruntime = "false"
+               destdir = "${build.dir}"
+               source = "${jdk.version}"
+               target = "${jdk.version}">
+            <src path = "${src.dir}"/>
+            <classpath refid = "classpath.master"/>
+        </javac>
+
+        <manifestclasspath property="lib.list" jarfile="${lib.dir}/${name}.jar">
+            <classpath refid="classpath.master"/>
+        </manifestclasspath>
+        <jar jarfile="${lib.dir}/${name}.jar" compress="true" basedir="${build.dir}" excludes="${build.dir}/test*">
+            <manifest>
+                <attribute name="Main-Class" value="main.Main"/>
+                <attribute name="Class-Path" value="${lib.list}"/>
+            </manifest>
+        </jar>
+
+
+    </target>
+
+</project>
+
+<!--
+
+        <patternset id="meta.files">
+            <include name="**/*.xml" />
+            <include name="**/*.properties" />
+        </patternset>
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}">
+                <patternset refid="meta.files" />
+            </fileset>
+        </copy>
+
+
+
+
+        <manifestclasspath property="lib.list" jarfile="${lib.dir}/${name}.jar">
+            <classpath refid="master-classpath"/>
+        </manifestclasspath>
+        <jar jarfile="${lib.dir}/${name}.jar" compress="true" basedir="${build.dir}">
+            <fileset dir="${build.dir}">
+                <include name="**/*"/>
+            </fileset>
+            <fileset dir="${classes.dir}">
+                <include name="*.xml"/>
+            </fileset>
+            <manifest>
+                <attribute name="Main-Class" value="org.Main.Main"/>
+                <attribute name="Class-Path" value="${lib.list}"/>
+            </manifest>
+        </jar>
+    </target>
+-->

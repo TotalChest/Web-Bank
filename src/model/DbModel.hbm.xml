@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-lazy="false">
+    <class name="model.Account" table="accounts">
+        <id column="account_id" name="id" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <property column="number" name="number" type="java.lang.String"/>
+        <many-to-one column="customer_id" name="customer" class="model.Customer"/>
+        <property column="balance" name="balance" type="java.lang.Float"/>
+        <many-to-one column="type_id" name="type" class="model.TypeOfAccount"/>
+        <many-to-one column="interest_account" name="interestAccount" class="model.Account"/>
+        <many-to-one column="department_id" name="department" class="model.Department"/>
+        <property column="date_of_start" name="date" type="java.sql.Timestamp"/>
+        <set name="operationSet" inverse="true" cascade="all" lazy="false">
+            <key column="account_id" on-delete="cascade"/>
+            <one-to-many class="model.Operation"/>
+        </set>
+        <set name="accountSet" inverse="true" cascade="all" lazy="false">
+            <key column="account_id" on-delete="cascade"/>
+            <one-to-many class="model.Account"/>
+        </set>
+    </class>
+
+    <class name="model.Contact" table="contacts">
+        <id column="contact_id" name="id" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <many-to-one column="customer_id" name="customer" class="model.Customer"/>
+        <property column="name" name="name" type="java.lang.String"/>
+        <property column="surname" name="surname" type="java.lang.String"/>
+        <property column="adress" name="adress" type="java.lang.String"/>
+        <property column="phone_number" name="phoneNumber" type="java.lang.String"/>
+        <property column="email" name="email" type="java.lang.String"/>
+    </class>
+
+    <class name="model.Customer" table="customers">
+        <id column="customer_id" name="id" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <property column="name" name="name" type="java.lang.String"/>
+        <property column="date_of_registration" name="dateOfRegistration" type="java.sql.Timestamp"/>
+        <set name="accountSet" inverse="true" cascade="all" lazy="false">
+            <key column="customer_id" on-delete="cascade"/>
+            <one-to-many class="model.Account"/>
+        </set>
+        <set name="contactSet" inverse="true" cascade="all" lazy="false">
+            <key column="customer_id" on-delete="cascade"/>
+            <one-to-many class="model.Contact"/>
+        </set>
+    </class>
+
+    <class name="model.Department" table="departments">
+        <id column="department_id" name="id" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <property column="name" name="name" type="java.lang.String"/>
+        <property column="adress" name="adress" type="java.lang.String"/>
+        <set name="accountSet" inverse="true" cascade="all" lazy="false">
+            <key column="department_id" on-delete="cascade"/>
+            <one-to-many class="model.Account"/>
+        </set>
+    </class>
+
+    <class name="model.Operation" table="operations">
+        <id column="operation_id" name="id" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <many-to-one column="account_id" name="account" class="model.Account"/>
+        <property column="amount" name="amount" type="java.lang.Float"/>
+        <property column="date" name="date" type="java.sql.Timestamp"/>
+    </class>
+
+    <class name="model.TypeOfAccount" table="types_of_account">
+        <id column="type_id" name="id" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <property column="yield" name="yield" type="java.lang.Float"/>
+        <property column="interval" name="interval" type="java.lang.Integer"/>
+        <property column="max_credit" name="maxCredit" type="java.lang.Integer"/>
+        <property column="max_debit" name="maxDebit" type="java.lang.Integer"/>
+        <set name="accountSet" inverse="true" cascade="all" lazy="false">
+            <key column="type_id" on-delete="cascade"/>
+            <one-to-many class="model.Account"/>
+        </set>
+    </class>
+
+</hibernate-mapping>

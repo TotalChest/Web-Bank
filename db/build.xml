@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <project name="setupDB" basedir="." default="all">
 
+	<property file="../build.properties"/>
+
 	<target name="all" depends="dropDB, createDB, initDB, fillDB" />
 
 	<target name="createDB">
