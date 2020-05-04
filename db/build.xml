@@ -1,61 +1,75 @@
 <?xml version="1.0"?>
-
 <project name="setupDB" basedir="." default="all">
 
+	<target name="all" depends="dropDB, createDB, initDB, fillDB" />
 
 	<target name="createDB">
-		<sql driver="${db.driver}"
-			classpath="${db.classpath}"
-			url="${db.url}"
-			userid="${db.user}"
-			password="${bd.password}"
-			onerror="continue"
-			autocommit="true"
-			src="${db.dir}/scripts/Create_DB.sql">
+		<sql classpath="${db.classpath}"
+			 driver="${db.driver}"
+			 url="${db.url}"
+			 userid="${db.user}"
+			 password="${db.password}"
+			 autocommit="True"
+			 src="${db.dir}/scripts/Create_DB.sql">
 		</sql>
 	</target>
-
 
 	<target name="initDB">
-		<sql driver="${db.driver}"
-			classpath="${db.classpath}"
-			url="${db.url}"
-			userid="${db.user}"
-			password="${bd.password}"
-			onerror="continue"
-			autocommit="true"
-			src="${db.dir}/scripts/Init_DB.sql">
+		<sql classpath="${db.classpath}"
+			 driver="${db.driver}"
+			 url="${db.url}${db.database}"
+			 userid="${db.user}"
+			 password="${db.password}"
+			 autocommit="True"
+			 src="${db.dir}/scripts/Init_DB.sql">
 		</sql>
 	</target>
-
 
 	<target name="selectDB">
-		<sql driver="${db.driver}"
-			classpath="${db.classpath}"
-			url="${db.url}"
-			userid="${db.user}"
-			password="${bd.password}"
-			onerror="continue"
-			autocommit="true"
-			src="${db.dir}/scripts/Select_DB.sql">
+		<sql classpath="${db.classpath}"
+			 driver="${db.driver}"
+			 url="${db.url}${db.database}"
+			 userid="${db.user}"
+			 password="${db.password}"
+			 autocommit="True"
+			 src="${db.dir}/scripts/Select_DB.sql">
 		</sql>
 	</target>
-
 
 	<target name="dropDB">
 		<sql driver="${db.driver}"
-			classpath="${db.classpath}"
-			url="${db.url}"
-			userid="${db.user}"
-			password="${bd.password}"
-			onerror="continue"
-			autocommit="true"
-			src="${db.dir}/scripts/Drop_DB.sql">
+			 classpath="${db.classpath}"
+			 url="${db.url}"
+			 userid="${db.user}"
+			 password="${bd.password}"
+			 onerror="continue"
+			 autocommit="true"
+			 src="${db.dir}/scripts/Drop_DB.sql">
 		</sql>
 	</target>
 
+	<target name="deleteDB">
+		<sql driver="${db.driver}"
+			 classpath="${db.classpath}"
+			 url="${db.url}${db.database}"
+			 userid="${db.user}"
+			 password="${bd.password}"
+			 onerror="continue"
+			 autocommit="true"
+			 src="${db.dir}/scripts/Delete_DB.sql">
+		</sql>
+	</target>
 
-	<target name="all" depends="createDB, initDB" />
-
+	<target name="fillDB">
+		<sql driver="${db.driver}"
+			 classpath="${db.classpath}"
+			 url="${db.url}${db.database}"
+			 userid="${db.user}"
+			 password="${bd.password}"
+			 onerror="continue"
+			 autocommit="true"
+			 src="${db.dir}/scripts/Fill_DB.sql">
+		</sql>
+	</target>
 
 </project>
