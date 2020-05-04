@@ -49,6 +49,13 @@
             <key column="customer_id" on-delete="cascade"/>
             <one-to-many class="model.Contact"/>
         </set>
+        <!--
+        <property column="type" name="type">
+            <type name ="org.hibernate.type.EnumType">
+                <param name="enumClass">model.CustomerType</param>
+                <param name="type">0</param>
+            </type>
+        </property-->
     </class>
 
     <class name="model.Department" table="departments">
@@ -70,6 +77,14 @@
         <many-to-one column="account_id" name="account" class="model.Account"/>
         <property column="amount" name="amount" type="java.lang.Float"/>
         <property column="date" name="date" type="java.sql.Timestamp"/>
+        <!--
+        <property column="operation" name="operation">
+            <type name ="org.hibernate.type.EnumType">
+                <param name="enumClass">model.OperationType</param>
+                <param name="type">0</param>
+            </type>
+        </property>
+        -->
     </class>
 
     <class name="model.TypeOfAccount" table="types_of_account">
@@ -84,6 +99,14 @@
             <key column="type_id" on-delete="cascade"/>
             <one-to-many class="model.Account"/>
         </set>
+        <!--
+        <property column="name" name="type">
+            <type name ="org.hibernate.type.EnumType">
+                <param name="enumClass">model.TypeName</param>
+                <param name="type">0</param>
+            </type>
+        </property>
+        -->
     </class>
 
 </hibernate-mapping>

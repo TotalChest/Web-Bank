@@ -34,10 +34,6 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 
     public void deleteDepartment(Department w) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
-            for (Account entry : w.getAccountSet()) {
-                entry.setDepartment(null);
-                session.update(entry);
-            }
             w.getAccountSet().clear();
             session.delete(w);
         });
@@ -47,10 +43,6 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
             Department w = (Department) session.get(Department.class, id);
             if(w != null) {
-                for (Account entry : w.getAccountSet()) {
-                    entry.setDepartment(null);
-                    session.update(entry);
-                }
                 w.getAccountSet().clear();
             }
             session.delete(w);

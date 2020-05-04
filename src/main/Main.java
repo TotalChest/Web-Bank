@@ -15,8 +15,8 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        OperationDAO operationDAO = DAOFactory.getInstance().getOperationDAO();
-        Operation o = operationDAO.getOperationById(6);
-        System.out.println(o.getAccount().getNumber());
+        TypeOfAccountDAO typeOfAccountDAO = DAOFactory.getInstance().getTypeOfAccountDAO();
+        TypeOfAccount t = typeOfAccountDAO.getTypeOfAccountById(2);
+        System.out.println(t.getType());
     }
 }

@@ -34,15 +34,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     public void deleteCustomer(Customer w) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
-            for (Account entry : w.getAccountSet()) {
-                entry.setCustomer(null);
-                session.update(entry);
-            }
             w.getAccountSet().clear();
-            for (Contact entry : w.getContactSet()) {
-                entry.setCustomer(null);
-                session.update(entry);
-            }
             w.getContactSet().clear();
             session.delete(w);
         });
@@ -52,15 +44,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
             Customer w = (Customer) session.get(Customer.class, id);
             if(w != null) {
-                for (Account entry : w.getAccountSet()) {
-                    entry.setCustomer(null);
-                    session.update(entry);
-                }
                 w.getAccountSet().clear();
-                for (Contact entry : w.getContactSet()) {
-                    entry.setCustomer(null);
-                    session.update(entry);
-                }
                 w.getContactSet().clear();
             }
             session.delete(w);

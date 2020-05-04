@@ -2,8 +2,11 @@ package test;
 
 import dao.*;
 import model.*;
+import org.hibernate.hql.ast.SqlASTFactory;
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -11,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 import java.sql.Timestamp;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DAOTests {
     private DepartmentDAO departmentDAO = DAOFactory.getInstance().getDepartmentDAO();
     private AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
@@ -107,6 +111,22 @@ public class DAOTests {
     }
 
     @Test
+    public void testDeleteDepartment() throws SQLException {
+        Department d = (Department) departmentDAO.getAllDepartments().get(0);
+        int id = d.getId();
+        int oldSize = departmentDAO.getAllDepartments().size();
+        departmentDAO.deleteDepartment(d);
+        int newSize = departmentDAO.getAllDepartments().size();
+
+        for(Object acc: accountDAO.getAllAccounts()) {
+            Assert.assertNotEquals(java.util.Optional.of(id), ((Account)acc).getDepartment().getId());
+        }
+
+        Assert.assertNull(departmentDAO.getDepartmentById(id));
+        Assert.assertEquals(newSize, oldSize - 1);
+    }
+
+    @Test
     public void testDeleteById() throws SQLException {
         Customer c = (Customer) customerDAO.getAllCustomers().get(0);
         int id = c.getId();
@@ -189,7 +209,7 @@ public class DAOTests {
         Customer cus = new Customer();
         cus.setName("Круглов Алексей");
         cus.setDateOfRegistration(Timestamp.valueOf("2020-03-27 12:36:33.0"));
-        cus.setType(CustomerType.INDIVIDUAL);
+        cus.setType(CustomerType.ORGANIZATION);
         int id_cus = customerDAO.addCustomer(cus);
         Contact con = new Contact();
         con.setCustomer(customerDAO.getCustomerById(id_cus));

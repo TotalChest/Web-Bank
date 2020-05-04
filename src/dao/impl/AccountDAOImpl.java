@@ -36,22 +36,14 @@ public class AccountDAOImpl implements AccountDAO {
     public void deleteAccount(Account w) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
             w.getCustomer().getAccountSet().remove(w);
-            session.update(w.getCustomer());
+            w.setCustomer(null);
             w.getType().getAccountSet().remove(w);
-            session.update(w.getType());
+            w.setType(null);
             w.getInterestAccount().getAccountSet().remove(w);
-            session.update(w.getInterestAccount());
+            w.setInterestAccount(null);
             w.getDepartment().getAccountSet().remove(w);
-            session.update(w.getDepartment());
-            for (Operation entry : w.getOperationSet()) {
-                entry.setAccount(null);
-                session.update(entry);
-            }
+            w.setDepartment(null);
             w.getOperationSet().clear();
-            for (Account entry : w.getAccountSet()) {
-                entry.setInterestAccount(null);
-                session.update(entry);
-            }
             w.getAccountSet().clear();
             session.delete(w);
         });
@@ -62,22 +54,14 @@ public class AccountDAOImpl implements AccountDAO {
             Account w = (Account) session.get(Account.class, id);
             if(w != null) {
                 w.getCustomer().getAccountSet().remove(w);
-                session.update(w.getCustomer());
+                w.setCustomer(null);
                 w.getType().getAccountSet().remove(w);
-                session.update(w.getType());
+                w.setType(null);
                 w.getInterestAccount().getAccountSet().remove(w);
-                session.update(w.getInterestAccount());
+                w.setInterestAccount(null);
                 w.getDepartment().getAccountSet().remove(w);
-                session.update(w.getDepartment());
-                for (Operation entry : w.getOperationSet()) {
-                    entry.setAccount(null);
-                    session.update(entry);
-                }
+                w.setDepartment(null);
                 w.getOperationSet().clear();
-                for (Account entry : w.getAccountSet()) {
-                    entry.setInterestAccount(null);
-                    session.update(entry);
-                }
                 w.getAccountSet().clear();
             }
             session.delete(w);

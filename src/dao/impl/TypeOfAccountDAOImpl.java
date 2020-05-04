@@ -33,10 +33,6 @@ public class TypeOfAccountDAOImpl implements TypeOfAccountDAO {
 
     public void deleteTypeOfAccount(TypeOfAccount w) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
-            for (Account entry : w.getAccountSet()) {
-                entry.setType(null);
-                session.update(entry);
-            }
             w.getAccountSet().clear();
             session.delete(w);
         });
@@ -46,10 +42,6 @@ public class TypeOfAccountDAOImpl implements TypeOfAccountDAO {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
             TypeOfAccount w = (TypeOfAccount) session.get(TypeOfAccount.class, id);
             if(w != null) {
-                for (Account entry : w.getAccountSet()) {
-                    entry.setType(null);
-                    session.update(entry);
-                }
                 w.getAccountSet().clear();
             }
             session.delete(w);

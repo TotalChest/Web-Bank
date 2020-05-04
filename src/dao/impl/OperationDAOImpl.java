@@ -33,7 +33,7 @@ public class OperationDAOImpl implements OperationDAO {
     public void deleteOperation(Operation w) throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> {
             w.getAccount().getOperationSet().remove(w);
-            session.update(w.getAccount());
+            w.setAccount(null);
             session.delete(w);
         });
     }
@@ -43,7 +43,7 @@ public class OperationDAOImpl implements OperationDAO {
             Operation w = (Operation) session.get(Operation.class, id);
             if(w != null) {
                 w.getAccount().getOperationSet().remove(w);
-                session.update(w.getAccount());
+                w.setAccount(null);
             }
             session.delete(w);
         });

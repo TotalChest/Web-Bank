@@ -1,5 +1,7 @@
 package model;
 
+import org.hibernate.annotations.Type;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.EnumType;
