@@ -5,7 +5,7 @@
 
     <property file="build.properties"/>
 
-    <target name="all" depends="clean, setupDB, compile, build-jar, build-war" />
+    <target name="all" depends="clean, setupDB, compile, build-jar, build-war, stop-server, start-server, deploy" />
 
     <target name="setupDB">
         <ant antfile="${db.dir}/build.xml"/>
@@ -23,15 +23,44 @@
         <ant antfile = "${src.dir}/build-war.xml"/>
     </target>
 
-    <target name="run" depends="all">
+    <target name="run" depends="clean, setupDB, compile, build-jar">
         <java jar="${lib.dir}/${name}.jar" fork="true"/>
     </target>
 
-    <target name = "runtests" depends = "all">
-        <ant antfile = "${test.dir}/build.xml"/>
+    <target name = "unit-test" depends = "clean, setupDB, compile, build-jar">
+        <ant antfile = "${unit_test.dir}/build.xml"/>
     </target>
 
+    <target name = "start-server" depends="stop-server">
+        <exec executable = "${asadmin}">
+            <arg value="start-domain"/>
+        </exec>
+    </target>
 
+    <target name = "stop-server">
+        <exec executable = "${asadmin}">
+            <arg value="stop-domain"/>
+        </exec>
+    </target>
+
+    <target name = "deploy" depends="build-war, start-server">
+        <exec executable = "${asadmin}">
+            <arg value = "deploy"/>
+            <arg value = "--force=true"/>
+            <arg value = "${dist.dir}/${name}.war"/>
+        </exec>
+    </target>
+
+    <target name = "undeploy">
+        <exec executable = "${asadmin}">
+            <arg value = "undeploy"/>
+            <arg value = "${name}"/>
+        </exec>
+    </target>
+
+    <target name = "system-test" depends = "all">
+        <ant antfile = "${system_test.dir}/build.xml"/>
+    </target>
 
     <target name = "clean">
         <delete dir="${build.dir}"/>
