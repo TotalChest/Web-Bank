@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="Build-war" default="all" basedir=".">
+
+    <property file="../build.properties"/>
+
+    <target name="all" depends="build-war" />
+
+    <path id = "classpath.master">
+        <fileset dir = "${lib.dir}">
+            <include name = "*.jar"/>
+        </fileset>
+        <pathelement path = "${build.dir}"/>
+    </path>
+
+    <target name = "build-war">
+
+        <mkdir dir = "${dist.dir}"/>
+
+        <war destfile="${dist.dir}/${name}.war" basedir="${src.dir}/war" webxml="${src.dir}/war/WEB-INF/web.xml">
+            <fileset dir = ".">
+                <include name = "WEB-INF/jsp/*"/>
+                <include name = "WEB-INF/*.*"/>
+                <exclude name = "WEB-INF/web.xml"/>
+            </fileset>
+            <file name="index.jsp"/>
+            <lib dir="lib"/>
+            <classes dir="build"/>
+        </war>
+
+    </target>
+
+</project>

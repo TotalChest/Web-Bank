@@ -5,14 +5,22 @@
 
     <property file="build.properties"/>
 
-    <target name="all" depends="clean, setupDB, build" />
+    <target name="all" depends="clean, setupDB, compile, build-jar, build-war" />
 
     <target name="setupDB">
         <ant antfile="${db.dir}/build.xml"/>
     </target>
 
-    <target name = "build">
+    <target name ="compile">
         <ant antfile = "${src.dir}/build.xml"/>
+    </target>
+
+    <target name ="build-jar" depends="compile">
+        <ant antfile = "${src.dir}/build-jar.xml"/>
+    </target>
+
+    <target name ="build-war" depends="compile">
+        <ant antfile = "${src.dir}/build-war.xml"/>
     </target>
 
     <target name="run" depends="all">
@@ -25,28 +33,11 @@
 
 
 
-
-
     <target name = "clean">
         <delete dir="${build.dir}"/>
         <delete dir="${testreport.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <delete file="${lib.dir}/${name}.jar" />
     </target>
 
 </project>
-
-<!--
-
-
-
-
-
-        <target name="run" depends="all">
-            <java jar="${lib.dir}/${name}.jar" fork="true"/>
-        </target>
-
-
-
-
-
-
--->

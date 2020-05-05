@@ -119,7 +119,7 @@ public class DAOTests {
         int newSize = departmentDAO.getAllDepartments().size();
 
         for(Object acc: accountDAO.getAllAccounts()) {
-            Assert.assertNotEquals(java.util.Optional.of(id), ((Account)acc).getDepartment().getId());
+            Assert.assertTrue(id != (int)((Account)acc).getDepartment().getId());
         }
 
         Assert.assertNull(departmentDAO.getDepartmentById(id));

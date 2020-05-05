@@ -17,7 +17,7 @@
             <formatter type="brief"/>
             <batchtest todir="${testreport.dir}">
                 <fileset dir="${build.dir}">
-                    <include name="**/*est*"/>
+                    <include name="**/*Test*"/>
                 </fileset>
             </batchtest>
         </junit>

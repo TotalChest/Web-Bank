@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project name="Build-jar" default="all" basedir=".">
+
+    <property file="../build.properties"/>
+
+    <target name="all" depends="build-jar" />
+
+    <path id = "classpath.master">
+        <fileset dir = "${lib.dir}">
+            <include name = "*.jar"/>
+        </fileset>
+        <pathelement path = "${build.dir}"/>
+    </path>
+
+    <target name = "build-jar">
+
+        <manifestclasspath property="lib.list" jarfile="${lib.dir}/${name}.jar">
+            <classpath refid="classpath.master"/>
+        </manifestclasspath>
+
+        <jar jarfile="${lib.dir}/${name}.jar" compress="true" basedir="${build.dir}" excludes="${build.dir}/test*">
+            <manifest>
+                <attribute name="Main-Class" value="main.Main"/>
+                <attribute name="Class-Path" value="${lib.list}"/>
+            </manifest>
+        </jar>
+
+    </target>
+
+</project>
