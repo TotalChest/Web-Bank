@@ -81,3 +81,25 @@ input, option {
 input:hover {
     color: #ec1db8;
 }
+
+.button {
+     background-color: #cccccc;
+     font-size: 18px;
+     border: 1px solid #ddd;
+     margin: 12px;
+}
+
+.button:hover {
+     background-color: #999999;
+}
+
+.active_button {
+     background-color: #44ff44;
+     font-size: 18px;
+     border: 1px solid #ddd;
+     margin: 12px;
+}
+
+.active_button:hover {
+     background-color: #22ff22;
+}
