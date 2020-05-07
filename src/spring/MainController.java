@@ -9,17 +9,11 @@ import org.springframework.ui.ModelMap;
 @Controller
 public class MainController {
 
-    private final Application application;
-
-    public MainController() {
-        this.application = Application.getInstance();
-    }
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String Root(ModelMap map){
         return "Root";
     }
-
+/*
     @RequestMapping(value = "/add/department", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity AddDepartment(
             @RequestParam("name") String name,
@@ -39,4 +33,5 @@ public class MainController {
     {
         return  application.getInstance().addCustomer(type, name, surname, address, phone, mail);
     }
+ */
 }

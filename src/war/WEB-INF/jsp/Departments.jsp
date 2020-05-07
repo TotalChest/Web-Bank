@@ -14,6 +14,6 @@
 <button class="button" onClick='location.href="${pageContext.request.contextPath}/operations"'>Операции</button>
 <h1><a href="${pageContext.request.contextPath}/">Система управления сберегательными счетами клиентов банка</a></h1>
 <button class="button" onClick='location.href="${pageContext.request.contextPath}/add/department"'>Добавить отделение</button>
-<div>Таблица отделений банка</div>
+<div>Таблица отделений банка ${id}</div>
 </body>
 </html>

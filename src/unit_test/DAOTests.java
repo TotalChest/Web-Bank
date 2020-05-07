@@ -1,8 +1,7 @@
-package test;
+package unit_test;
 
 import dao.*;
 import model.*;
-import org.hibernate.hql.ast.SqlASTFactory;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -223,24 +222,6 @@ public class DAOTests {
         Assert.assertEquals(customerDAO.getCustomerById(id_cus).getName(), "Круглов Алексей");
         for (Contact entry : customerDAO.getCustomerById(id_cus).getContactSet()) {
             Assert.assertEquals(entry.getName(), "Алексей");
-        }
-    }
-
-    @Test
-    public void testDAOHelpers() throws SQLException {
-        List types = DAOHelpers.ExecuteInSession(session -> session.createQuery("from TypeOfAccount").list());
-        Set<Integer> ids = new HashSet<>();
-        ids.add(1);
-        ids.add(2);
-        ids.add(3);
-        ids.add(4);
-        ids.add(5);
-        ids.add(6);
-        ids.add(7);
-        ids.add(8);
-        ids.add(9);
-        for (Object t : types) {
-            Assert.assertTrue(ids.contains(((TypeOfAccount) t).getId()));
         }
     }
 
