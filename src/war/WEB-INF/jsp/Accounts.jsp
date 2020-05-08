@@ -1,26 +1,90 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"%>
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
-<style><%@include file="/WEB-INF/jsp/styles.css"%></style>
+
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>...</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="/images/favicon.jpg" type="image/jpg">
+        <title>Счета</title>
+    </head>
 
-<body>
+    <body>
+        <div class="header">
+            <div class="header_content">
+                <button class="common_button" onClick='location.href="${pageContext.request.contextPath}/customers"'>КЛИЕНТЫ</button>
+                <button class="active_button" onClick='location.href="${pageContext.request.contextPath}/accounts"'>СЧЕТА</button>
+                <button class="common_button" onClick='location.href="${pageContext.request.contextPath}/departments"'>ОТДЕЛЕНИЯ</button>
+                <button class="common_button" onClick='location.href="${pageContext.request.contextPath}/operations"'>ОПЕРАЦИИ</button>
+                <div class="header_text">
+                    <a href="${pageContext.request.contextPath}/">СИСТЕМА УПРАВЛЕНИЯ СБЕРЕГАТЕЛЬНЫМИ СЧЕТАМИ БАНКА</a>
+                </div>
+            </div>
+        </div>
 
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/customers"'>Клиенты</button>
-<button class="active_button" onClick='location.href="${pageContext.request.contextPath}/accounts"'>Счета</button>
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/departments"'>Отделения</button>
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/operations"'>Операции</button>
+        <div class="body_content">
+            <table>
+                <tr>
+                    <td class="but">
+                        <div class="filters">
+                            ФИЛЬТР
+                        </div>
+                    </td>
+                    <td class="but">
+                        <div class="button" onClick='location.href="${pageContext.request.contextPath}/add/account"'>
+                            ДОБАВИТЬ СЧЕТ
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <hr>
+            <div class="block_head">
+                Таблица счетов
+            </div>
+            <div class="block">
+                <table>
+                    <tr>
+                        <th>Номер счета</th>
+                        <th>Клиент</th>
+                        <th>Баланс</th>
+                        <th>Тип</th>
+                        <th>Отделение</th>
+                        <th>Дата открытия</th>
+                    </tr>
+                    <tr>
+                        <td>89676776</td>
+                        <td>Иванов</td>
+                        <td>20000</td>
+                        <td>LIGHT</td>
+                        <td>Сбербанк Алтуфьево</td>
+                        <td>23.11.19</td>
+                    </tr>
+                    <tr>
+                        <td>89676776</td>
+                        <td>Иванов</td>
+                        <td>20000</td>
+                        <td>LIGHT</td>
+                        <td>Сбербанк Алтуфьево</td>
+                        <td>23.11.19</td>
+                    </tr>
+                    <tr>
+                        <td>89676776</td>
+                        <td>Иванов</td>
+                        <td>20000</td>
+                        <td>LIGHT</td>
+                        <td>Сбербанк Алтуфьево</td>
+                        <td>23.11.19</td>
+                    </tr>
+                    <tr>
+                        <td>89676776</td>
+                        <td>Иванов</td>
+                        <td>20000</td>
+                        <td>LIGHT</td>
+                        <td>Сбербанк Алтуфьево</td>
+                        <td>23.11.19</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-<h1><a href="${pageContext.request.contextPath}/">Система управления сберегательными счетами клиентов банка</a></h1>
-
-<div>Фильтры</div>
-
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/add/account"'>Добавить счет</button>
-
-<div>Таблица счетов</div>
-
-</body>
+    </body>
 </html>

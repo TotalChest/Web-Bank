@@ -3,32 +3,44 @@
 <style><%@include file="/WEB-INF/jsp/styles.css"%></style>
 
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>...</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="/images/favicon.jpg" type="image/jpg">
+        <title>Добавить отделение</title>
+    </head>
 
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/customers"'>Клиенты</button>
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/accounts"'>Счета</button>
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/departments"'>Отделения</button>
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/operations"'>Операции</button>
+    <body>
+        <div class="header">
+            <div class="header_content">
+                <button class="common_button" onClick='location.href="${pageContext.request.contextPath}/customers"'>КЛИЕНТЫ</button>
+                <button class="common_button" onClick='location.href="${pageContext.request.contextPath}/accounts"'>СЧЕТА</button>
+                <button class="active_button" onClick='location.href="${pageContext.request.contextPath}/departments"'>ОТДЕЛЕНИЯ</button>
+                <button class="common_button" onClick='location.href="${pageContext.request.contextPath}/operations"'>ОПЕРАЦИИ</button>
+                <div class="header_text">
+                    <a href="${pageContext.request.contextPath}/">СИСТЕМА УПРАВЛЕНИЯ СБЕРЕГАТЕЛЬНЫМИ СЧЕТАМИ БАНКА</a>
+                </div>
+            </div>
+        </div>
 
-<h1><a href="${pageContext.request.contextPath}/">Система управления сберегательными счетами клиентов банка</a></h1>
+        <div class="body_content">
+            <form id="dep_form" action="${pageContext.request.contextPath}/add/department" method="post">
+                <div class="button" onClick='document.getElementById("dep_form").submit()'>
+                    ДОБАВИТЬ
+                </div>
+                <div class="block">
+                    <table>
+                        <tr>
+                            <th>Название</th>
+                            <td><input class="in" type="text" name="name" required/></td>
+                        </tr>
+                        <tr>
+                            <th>Адрес</th>
+                            <td><input class="in" type="text" name="address" required/></td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
 
-<form action="${pageContext.request.contextPath}/add/department" method="post">
-    <input type="submit" value="Добавить" class="button"/>
-    <table>
-        <tr>
-            <td>Name</td>
-            <td><input type="text" name="name" required/></td>
-        </tr>
-        <tr>
-            <td>Address</td>
-            <td><input type="text" name="address" required/></td>
-        </tr>
-    </table>
-</form>
-
-</body>
+    </body>
 </html>

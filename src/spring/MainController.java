@@ -13,6 +13,12 @@ public class MainController {
     public String Root(ModelMap map){
         return "Root";
     }
+
+    @RequestMapping(value = "/**", method = RequestMethod.GET)
+    public String Error(ModelMap map){
+        return "Error";
+    }
+
 /*
     @RequestMapping(value = "/add/department", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity AddDepartment(

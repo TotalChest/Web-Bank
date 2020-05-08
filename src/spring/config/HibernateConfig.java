@@ -25,7 +25,7 @@ import java.util.Properties;
 public class HibernateConfig {
     @Autowired
     private Environment env;
-
+/*
     private Properties hibernateProperties() {
         final Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
@@ -35,7 +35,7 @@ public class HibernateConfig {
 
         return hibernateProperties;
     }
-/*
+
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

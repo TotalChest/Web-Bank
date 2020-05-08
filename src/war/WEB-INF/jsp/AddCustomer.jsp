@@ -1,48 +1,61 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"%>
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
-<style><%@include file="/WEB-INF/jsp/styles.css"%></style>
+
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>...</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="/images/favicon.jpg" type="image/jpg">
+        <title>Добавить клиента</title>
+    </head>
 
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/customers"'>Клиенты</button>
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/accounts"'>Счета</button>
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/departments"'>Отделения</button>
-<button class="button" onClick='location.href="${pageContext.request.contextPath}/operations"'>Операции</button>
+    <body>
+        <div class="header">
+            <div class="header_content">
+                <button class="active_button" onClick='location.href="${pageContext.request.contextPath}/customers"'>КЛИЕНТЫ</button>
+                <button class="common_button" onClick='location.href="${pageContext.request.contextPath}/accounts"'>СЧЕТА</button>
+                <button class="common_button" onClick='location.href="${pageContext.request.contextPath}/departments"'>ОТДЕЛЕНИЯ</button>
+                <button class="common_button" onClick='location.href="${pageContext.request.contextPath}/operations"'>ОПЕРАЦИИ</button>
+                <div class="header_text">
+                    <a href="${pageContext.request.contextPath}/">СИСТЕМА УПРАВЛЕНИЯ СБЕРЕГАТЕЛЬНЫМИ СЧЕТАМИ БАНКА</a>
+                </div>
+            </div>
+        </div>
 
-<h1><a href="${pageContext.request.contextPath}/">Система управления сберегательными счетами клиентов банка</a></h1>
+        <div class="body_content">
+            <form id="cus_form" action="${pageContext.request.contextPath}/add/customer" method="post">
+                <div class="button" onClick='document.getElementById("cus_form").submit()'>
+                    ДОБАВИТЬ
+                </div>
+                <div class="block">
+                    <table>
+                        <tr>
+                            <th>Тип</th>
+                            <td><input class="in" type="text" name="type" required/></td>
+                        </tr>
+                        <tr>
+                            <th>Имя</th>
+                            <td><input class="in" type="text" name="name" required/></td>
+                        </tr>
+                        <tr>
+                            <th>Фамилия</th>
+                            <td><input class="in" type="text" name="surname" required/></td>
+                        </tr>
+                        <tr>
+                            <th>Адрес</th>
+                            <td><input class="in" type="text" name="address" required/></td>
+                        </tr>
+                        <tr>
+                            <th>Телефонный номер</th>
+                            <td><input class="in" type="text" name="phone_number" required/></td>
+                        </tr>
+                        <tr>
+                            <th>Электронная почта</th>
+                            <td><input class="in" type="text" name="email" required/></td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
 
-<form action="${pageContext.request.contextPath}/add/customer" method="post">
-    <input type="submit" value="Добавить" class="button"/>
-    <table>
-        <tr>
-            <td>Тип</td>
-            <td><input type="text" name="type" required/></td>
-        </tr>
-        <tr>
-             <td>Имя</td>
-             <td><input type="text" name="name" required/></td>
-        </tr>
-        <tr>
-            <td>Фимилия</td>
-            <td><input type="text" name="surname" required/></td>
-        </tr>
-        <tr>
-             <td>Адрес</td>
-             <td><input type="text" name="address" required/></td>
-        </tr>
-        <tr>
-            <td>Телефонный номер</td>
-            <td><input type="text" name="phone" required/></td>
-        </tr>
-        <tr>
-             <td>Почта</td>
-             <td><input type="text" name="mail" required/></td>
-        </tr>
-    </table>
-</form>
-</body>
+    </body>
 </html>

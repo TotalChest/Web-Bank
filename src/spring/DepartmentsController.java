@@ -12,12 +12,8 @@ import java.sql.SQLException;
 @Controller
 public class DepartmentsController {
 
-    @Autowired
-    private DepartmentDAO departmentDAO;
-
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
-    public String Departments(ModelMap model) throws SQLException {
-        //model.addAttribute("competitionsList", departmentDAO.getDepartmentById(2));
+    public String Departments() {
         return "Departments";
     }
 
