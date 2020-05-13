@@ -6,236 +6,265 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
-import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.sql.Timestamp;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DAOTests {
-    /*
-    private DepartmentDAO departmentDAO = DAOFactory.getInstance().getDepartmentDAO();
-    private AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
-    private ContactDAO contactDAO = DAOFactory.getInstance().getContactDAO();
-    private CustomerDAO customerDAO = DAOFactory.getInstance().getCustomerDAO();
-    private OperationDAO operationDAO = DAOFactory.getInstance().getOperationDAO();
-    private TypeOfAccountDAO typeOfAccountDAO = DAOFactory.getInstance().getTypeOfAccountDAO();
+
+    private SessionFactory s;
+    private Transaction tx;
+
+    private DepartmentDAO departmentDAO;
+    private AccountDAO accountDAO;
+    private ContactDAO contactDAO;
+    private CustomerDAO customerDAO;
+    private OperationDAO operationDAO;
+    private TypeOfAccountDAO typeOfAccountDAO;
+
+    public void setUp() throws Exception{
+        s = new Configuration().configure().buildSessionFactory();
+        tx = s.getCurrentSession().beginTransaction();
+        departmentDAO = new DepartmentDAO();
+        accountDAO = new AccountDAO();
+        contactDAO = new ContactDAO();
+        customerDAO = new CustomerDAO();
+        operationDAO = new OperationDAO();
+        typeOfAccountDAO = new TypeOfAccountDAO();
+        departmentDAO.setSessionFactory(s);
+        accountDAO.setSessionFactory(s);
+        contactDAO.setSessionFactory(s);
+        customerDAO.setSessionFactory(s);
+        operationDAO.setSessionFactory(s);
+        typeOfAccountDAO.setSessionFactory(s);
+    }
+
+    public void shutDown() throws Exception {
+        tx.commit();
+        s.close();
+    }
 
     @Test
-    public void testAccount() throws SQLException {
-        int size = accountDAO.getAllAccounts().size();
+    public void testAccount() throws Exception {
+        setUp();
+
+        int size = accountDAO.getAll().size();
         Assert.assertEquals(size, 9);
 
-        Assert.assertEquals(accountDAO.getAccountById(2).getNumber(), "9008007002");
+        Assert.assertEquals(accountDAO.getById((long)2).getNumber(), "9008007002");
 
         Account a = new Account();
         a.setNumber("8008707005");
-        a.setCustomer(customerDAO.getCustomerById(2));
+        a.setCustomer(customerDAO.getById((long)2));
         a.setBalance(Float.valueOf(100000));
-        a.setType(typeOfAccountDAO.getTypeOfAccountById(2));
-        a.setInterestAccount(accountDAO.getAccountById(2));
-        a.setDepartment(departmentDAO.getDepartmentById(2));
+        a.setType(typeOfAccountDAO.getById((long)2));
+        a.setInterestAccount(accountDAO.getById((long)2));
+        a.setDepartment(departmentDAO.getById((long)2));
         a.setDate(Timestamp.valueOf("2020-03-21 06:40:01.0"));
-        int id = accountDAO.addAccount(a);
-        Assert.assertEquals(size + 1, accountDAO.getAllAccounts().size());
+        accountDAO.save(a);
+        long id = a.getAccountId();
 
-        Float balance = accountDAO.getAccountById(id).getBalance();
+        Assert.assertEquals(size + 1, accountDAO.getAll().size());
+
+        Float balance = accountDAO.getById(id).getBalance();
         a.setBalance(Float.valueOf(55000));
-        accountDAO.updateAccount(a);
-        Assert.assertFalse(accountDAO.getAccountById(id).getBalance() == balance);
+        accountDAO.update(a);
+        Assert.assertFalse(accountDAO.getById(id).getBalance() == balance);
 
-        accountDAO.deleteAccountById(a.getId());
-        Assert.assertEquals(size, accountDAO.getAllAccounts().size());
+        accountDAO.delete(a);
+        Assert.assertEquals(size, accountDAO.getAll().size());
 
         Account b = new Account();
         b.setNumber("8008707008");
-        b.setCustomer(customerDAO.getCustomerById(2));
+        b.setCustomer(customerDAO.getById((long)2));
         b.setBalance(Float.valueOf(100000));
-        b.setType(typeOfAccountDAO.getTypeOfAccountById(2));
-        b.setInterestAccount(accountDAO.getAccountById(2));
-        b.setDepartment(departmentDAO.getDepartmentById(2));
+        b.setType(typeOfAccountDAO.getById((long)2));
+        b.setInterestAccount(accountDAO.getById((long)2));
+        b.setDepartment(departmentDAO.getById((long)2));
         b.setDate(Timestamp.valueOf("2020-03-23 12:00:20.0"));
-        id = accountDAO.addAccount(b);
-        accountDAO.deleteAccount(accountDAO.getAccountById(id));
-        Assert.assertEquals(size , accountDAO.getAllAccounts().size());
+        accountDAO.save(b);
+        accountDAO.delete(b);
+        Assert.assertEquals(size , accountDAO.getAll().size());
+
+        shutDown();
     }
 
     @Test
-    public void testGetAll() throws SQLException {
-        Set<Integer> departmentIdSet = new HashSet<>();
+    public void testGetAll() throws Exception {
+        setUp();
+        Set<Long> departmentIdSet = new HashSet<>();
         for (int i = 1; i <= 100; ++i) {
-            Department d = departmentDAO.getDepartmentById(i);
+            Department d = departmentDAO.getById((long)i);
             if (d != null) {
-                departmentIdSet.add(d.getId());
+                departmentIdSet.add(d.getDepartmentId());
             }
         }
-        Assert.assertEquals(departmentDAO.getAllDepartments().size(), departmentIdSet.size());
-        for (Object d : departmentDAO.getAllDepartments()) {
-            Assert.assertTrue(departmentIdSet.contains(((Department) d).getId()));
+        Assert.assertEquals(departmentDAO.getAll().size(), departmentIdSet.size());
+        for (Object d : departmentDAO.getAll()) {
+            Assert.assertTrue(departmentIdSet.contains(((Department) d).getDepartmentId()));
         }
+        shutDown();
     }
 
     @Test
-    public void testAdd() throws SQLException {
+    public void testAdd() throws Exception {
+        setUp();
         Department d = new Department();
         d.setName("Сбербанк Технологии");
-        d.setAdress("Ул. Тверская, 25 ст. 4");
-        int oldSize = departmentDAO.getAllDepartments().size();
-        int id = departmentDAO.addDepartment(d);
-        int newSize = departmentDAO.getAllDepartments().size();
-        Department d1 = departmentDAO.getDepartmentById(id);
+        d.setAddress("Ул. Тверская, 25 ст. 4");
+        int oldSize = departmentDAO.getAll().size();
+        departmentDAO.save(d);
+        long id = d.getDepartmentId();
+        int newSize = departmentDAO.getAll().size();
+        Department d1 = departmentDAO.getById(id);
 
         Assert.assertEquals(d.getName(), d1.getName());
-        Assert.assertEquals(d.getAdress(), d1.getAdress());
+        Assert.assertEquals(d.getAddress(), d1.getAddress());
         Assert.assertEquals(newSize, oldSize + 1);
+        shutDown();
     }
 
-    @Test(expected = SQLException.class)
-    public void testAddNoRequiredField() throws SQLException {
+    @Test(expected = Exception.class)
+    public void testAddNoRequiredField() throws Exception {
+        setUp();
         Department d = new Department();
-        departmentDAO.addDepartment(d);
+        departmentDAO.save(d);
+        shutDown();
     }
 
     @Test
-    public void testDelete() throws SQLException {
-        Operation o = (Operation) operationDAO.getAllOperations().get(0);
-        int id = o.getId();
-        int oldSize = operationDAO.getAllOperations().size();
-        operationDAO.deleteOperation(o);
-        int newSize = operationDAO.getAllOperations().size();
+    public void testDelete() throws Exception {
+        setUp();
+        Operation o = operationDAO.getAll().get(0);
+        long id = o.getOperationId();
+        int oldSize = operationDAO.getAll().size();
+        operationDAO.delete(o);
+        int newSize = operationDAO.getAll().size();
 
-        Assert.assertNull(operationDAO.getOperationById(id));
+        Assert.assertNull(operationDAO.getById(id));
         Assert.assertEquals(newSize, oldSize - 1);
+        shutDown();
     }
 
-    @Test
-    public void testDeleteDepartment() throws SQLException {
-        Department d = (Department) departmentDAO.getAllDepartments().get(0);
-        int id = d.getId();
-        int oldSize = departmentDAO.getAllDepartments().size();
-        departmentDAO.deleteDepartment(d);
-        int newSize = departmentDAO.getAllDepartments().size();
-
-        for(Object acc: accountDAO.getAllAccounts()) {
-            Assert.assertTrue(id != (int)((Account)acc).getDepartment().getId());
-        }
-
-        Assert.assertNull(departmentDAO.getDepartmentById(id));
-        Assert.assertEquals(newSize, oldSize - 1);
+    @Test(expected = Exception.class)
+    public void testDeleteNull() throws Exception {
+        setUp();
+        customerDAO.delete(null);
+        shutDown();
     }
 
-    @Test
-    public void testDeleteById() throws SQLException {
-        Customer c = (Customer) customerDAO.getAllCustomers().get(0);
-        int id = c.getId();
-        int oldSize = customerDAO.getAllCustomers().size();
-        customerDAO.deleteCustomerById(id);
-        int newSize = customerDAO.getAllCustomers().size();
-
-        Assert.assertNull(customerDAO.getCustomerById(id));
-        Assert.assertEquals(newSize, oldSize - 1);
-    }
-
-    @Test(expected = SQLException.class)
-    public void testDeleteNull() throws SQLException {
-        customerDAO.deleteCustomer(null);
-    }
-
-    @Test(expected = SQLException.class)
-    public void testDeleteNonExistent() throws SQLException {
+    @Test(expected = Exception.class)
+    public void testDeleteNonExistent() throws Exception {
+        setUp();
         Customer c = new Customer();
-        c.setId(10000000);
-        customerDAO.deleteCustomer(c);
+        c.setCustomerId((long)10000000);
+        customerDAO.delete(c);
+        shutDown();
     }
 
-    @Test(expected = SQLException.class)
-    public void testDeleteByIdNonExistent() throws SQLException {
-        typeOfAccountDAO.deleteTypeOfAccountById(2000000);
+    @Test(expected = Exception.class)
+    public void testDeleteByIdNonExistent() throws Exception {
+        setUp();
+        typeOfAccountDAO.delete(typeOfAccountDAO.getById((long)2000000));
+        shutDown();
     }
 
     @Test
-    public void testUpdate() throws SQLException {
-        Customer c = customerDAO.getCustomerById(2);
-        int oldSize = customerDAO.getAllCustomers().size();
+    public void testUpdate() throws Exception {
+        setUp();
+        Customer c = customerDAO.getById((long)2);
+        int oldSize = customerDAO.getAll().size();
         c.setDateOfRegistration(Timestamp.valueOf("2019-07-11 13:00:18.0"));
-        customerDAO.updateCustomer(c);
-        int newSize = customerDAO.getAllCustomers().size();
-        c = customerDAO.getCustomerById(2);
+        customerDAO.update(c);
+        int newSize = customerDAO.getAll().size();
+        c = customerDAO.getById((long)2);
         Timestamp date = c.getDateOfRegistration();
 
         Assert.assertEquals(oldSize, newSize);
         Assert.assertNotNull(date);
         Assert.assertEquals(date, Timestamp.valueOf("2019-07-11 13:00:18.0"));
+        shutDown();
     }
 
-    @Test(expected = SQLException.class)
-    public void testUpdateNull() throws SQLException {
-        contactDAO.updateContact(null);
+    @Test(expected = Exception.class)
+    public void testUpdateNull() throws Exception {
+        setUp();
+        contactDAO.update(null);
+        shutDown();
     }
 
-    @Test(expected = SQLException.class)
-    public void testUpdateNonExistent() throws SQLException {
+    @Test(expected = Exception.class)
+    public void testUpdateNonExistent() throws Exception {
+        setUp();
         TypeOfAccount t = new TypeOfAccount();
-        typeOfAccountDAO.updateTypeOfAccount(t);
+        typeOfAccountDAO.update(t);
+        shutDown();
     }
 
-    @Test(expected = SQLException.class)
-    public void testUpdateNoRequiredField() throws SQLException {
-        Customer c = customerDAO.getCustomerById(2);
+    @Test(expected = Exception.class)
+    public void testUpdateNoRequiredField() throws Exception {
+        setUp();
+        Customer c = customerDAO.getById((long)2);
         c.setName(null);
-        customerDAO.updateCustomer(c);
+        customerDAO.update(c);
+        shutDown();
     }
 
     @Test
-    public void testGetById() throws SQLException {
-        Account a = accountDAO.getAccountById(6);
+    public void testGetById() throws Exception {
+        setUp();
+        Account a = accountDAO.getById((long)6);
 
         Assert.assertEquals(a.getNumber(), "9008007006");
-        Assert.assertEquals(a.getCustomer().getId(), Integer.valueOf(3));
-        Assert.assertEquals(a.getType().getId(), Integer.valueOf(3));
-        Assert.assertEquals(a.getDepartment().getId(), Integer.valueOf(3));
-        Assert.assertEquals(a.getInterestAccount().getId(), Integer.valueOf(5));
+        Assert.assertEquals(a.getCustomer().getCustomerId(), Long.valueOf(3));
+        Assert.assertEquals(a.getType().getTypeId(), Long.valueOf(3));
+        Assert.assertEquals(a.getDepartment().getDepartmentId(), Long.valueOf(3));
+        Assert.assertEquals(a.getInterestAccount().getAccountId(), Long.valueOf(5));
         Assert.assertEquals(a.getBalance(), Float.valueOf(18000));
         Assert.assertEquals(a.getDate(), Timestamp.valueOf("2020-02-05 16:58:45.0"));
 
-        a = accountDAO.getAccountById(2000000);
+        a = accountDAO.getById((long)2000000);
         Assert.assertNull(a);
+
+        shutDown();
     }
 
     @Test
-    public void testCustomerWithContact() throws SQLException{
+    public void testCustomerWithContact() throws Exception{
+        setUp();
         Customer cus = new Customer();
         cus.setName("Круглов Алексей");
         cus.setDateOfRegistration(Timestamp.valueOf("2020-03-27 12:36:33.0"));
-        cus.setType(CustomerType.ORGANIZATION);
-        int id_cus = customerDAO.addCustomer(cus);
+        cus.setType(Customer.CustomerType.ORGANIZATION);
+        customerDAO.save(cus);
+        long id_cus = cus.getCustomerId();
         Contact con = new Contact();
-        con.setCustomer(customerDAO.getCustomerById(id_cus));
+        con.setCustomer(customerDAO.getById(id_cus));
         con.setName("Алексей");
         con.setSurname("Круглов");
         con.setAdress("Ул. Академика Иванова, д.3");
         con.setPhoneNumber("8 (999) 780 66 54");
         con.setEmail("krug_alex@ya.ru");
-        int id_con = contactDAO.addContact(con);
+        contactDAO.save(con);
 
-        Assert.assertEquals(customerDAO.getCustomerById(id_cus).getName(), "Круглов Алексей");
-        for (Contact entry : customerDAO.getCustomerById(id_cus).getContactSet()) {
+
+        Assert.assertEquals(customerDAO.getById(id_cus).getName(), "Круглов Алексей");
+        for (Contact entry: contactDAO.getByCustomerId(id_cus)) {
             Assert.assertEquals(entry.getName(), "Алексей");
         }
+
+        shutDown();
     }
 
     @Test
-    public void testDAOHelpersTransactional() throws SQLException {
-        boolean isActive = DAOHelpers.ExecuteInSession(session -> session.getTransaction().isActive());
-        Assert.assertTrue(isActive);
+    public void tectEnum() throws Exception {
+        setUp();
+        TypeOfAccount t = typeOfAccountDAO.getAll().get(1);
+        Assert.assertEquals(t.getType(), TypeOfAccount.AccountType.LIGHT);
+        shutDown();
     }
-
-    @Test(expected = SQLException.class)
-    public void testDAOHelpersException() throws SQLException {
-        DAOHelpers.ExecuteInSessionVoidRet(session -> session.getTransaction().rollback());
-    }
-
-     */
 }

@@ -8,16 +8,16 @@ import org.hibernate.cfg.Configuration;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        OperationDAO _dao;
+        ContactDAO _dao;
         SessionFactory s;
         Transaction tx;
 
         s = new Configuration().configure().buildSessionFactory();
         tx = s.getCurrentSession().beginTransaction();
-        _dao = new OperationDAO();
+        _dao = new ContactDAO();
         _dao.setSessionFactory(s);
 
-        System.out.println(_dao.getById((long)2).getOperationId());
+        System.out.println(_dao.getByCustomerId((long)2).get(0).getEmail());
 
         tx.commit();
         s.close();
