@@ -1,9 +1,10 @@
 package spring.config;
 
-import dao.DepartmentDAO;
-//mport dao.impl.DepartmentDAOImpl;
+import dao.*;
+import model.*;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -21,7 +22,7 @@ import java.util.Properties;
 public class HibernateConfig {
     @Autowired
     private Environment env;
-/*
+
     private Properties hibernateProperties() {
         final Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
@@ -59,9 +60,33 @@ public class HibernateConfig {
         return new HibernateTransactionManager(sessionFactory);
     }
 
+    @Bean(name = "AccountDAO")
+    public AccountDAO AccountDAO() {
+        return new AccountDAO();
+    }
+
+    @Bean(name = "ContactDAO")
+    public ContactDAO ContactDAO() {
+        return new ContactDAO();
+    }
+
+    @Bean(name = "CustomerDAO")
+    public CustomerDAO CustomerDAO() {
+        return new CustomerDAO();
+    }
+
     @Bean(name = "DepartmentDAO")
     public DepartmentDAO DepartmentDAO() {
-        return DAOFactory.getInstance().getDepartmentDAO();
+        return new DepartmentDAO();
     }
-    */
+
+    @Bean(name = "OperationDAO")
+    public OperationDAO OperationDAO() {
+        return new OperationDAO();
+    }
+
+    @Bean(name = "TypeOfAccountDAO")
+    public TypeOfAccountDAO TypeOfAccountDAO() {
+        return new TypeOfAccountDAO();
+    }
 }

@@ -5,33 +5,35 @@
 <hibernate-configuration>
 
     <session-factory>
-        <property name="dialect">
-            org.hibernate.dialect.PostgreSQLDialect
+        <property name="hibernate.dialect">
+            org.hibernate.dialect.PostgreSQL9Dialect
         </property>
 
-        <property name="connection.url">
+        <property name="hibernate.connection.url">
             jdbc:postgresql://localhost:5433/web_bank
         </property>
 
-        <property name="connection.driver_class">
+        <property name="hibernate.connection.driver_class">
             org.postgresql.Driver
         </property>
 
-        <property name="connection.username">
+        <property name="hibernate.connection.username">
             admin
         </property>
 
-        <property name="connection.password">
+        <property name="hibernate.connection.password">
 
         </property>
 
-        <property name="connection.pool_size">
+        <property name="hibernate.connection.pool_size">
             1
         </property>
 
         <property name="hibernate.current_session_context_class">
             org.hibernate.context.internal.ThreadLocalSessionContext
         </property>
+
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="model.Account"/>
         <mapping class="model.Contact"/>

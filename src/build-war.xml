@@ -36,29 +36,6 @@
         </copy>
 
         <jar jarfile = "${dist.dir}/${name}.war" basedir = "${dist.dir}"/>
-<!--
-        <copy includeemptydirs="false" todir="${dist.dir}/WEB-INF/classes">
-            <fileset dir="${build.dir}">
-                <include name="**/*.class"/>
-                <include name="**/*.xml"/>
-                <include name="**/*.properties" />
-            </fileset>
-        </copy>
-
-        <copy todir = "${src.dir}/war/WEB-INF/lib" flatten = "true">
-            <fileset dir = "${lib.dir}" includes = "**/*.*"/>
-        </copy>
-
-        <war destfile="${dist.dir}/${name}.war" webxml="${src.dir}/war/WEB-INF/web.xml">
-            <fileset dir = "${src.dir}/war">
-                <include name = "WEB-INF/jsp/*"/>
-                <include name = "WEB-INF/*.*"/>
-                <exclude name = "WEB-INF/web.xml"/>
-            </fileset>
-            <lib dir="lib"/>
-            <classes dir="${src.dir}/war/WEB-INF/classes"/>
-        </war>
-        -->
 
     </target>
 
