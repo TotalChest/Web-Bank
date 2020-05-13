@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 
 public class AccountForm {
 
+    private Long accountId;
     private String number;
     private Customer customer;
     private TypeOfAccount type;
@@ -25,6 +26,14 @@ public class AccountForm {
         this.type = type;
         this.interestAccount = interestAccount;
         this.department = department;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     public String getNumber() {

@@ -246,7 +246,7 @@ public class DAOTests {
         con.setCustomer(customerDAO.getById(id_cus));
         con.setName("Алексей");
         con.setSurname("Круглов");
-        con.setAdress("Ул. Академика Иванова, д.3");
+        con.setAddress("Ул. Академика Иванова, д.3");
         con.setPhoneNumber("8 (999) 780 66 54");
         con.setEmail("krug_alex@ya.ru");
         contactDAO.save(con);

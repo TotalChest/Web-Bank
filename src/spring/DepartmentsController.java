@@ -1,6 +1,7 @@
 package spring;
 
 import dao.*;
+import forms.*;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class DepartmentsController {
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     public String Departments(ModelMap map) {
         try {
-            map.addAttribute("competitionsList", departmentDAO.getAll());
+            map.addAttribute("departmentList", departmentDAO.getAll());
             return "Departments";
         } catch (Exception e) {
             return "Error";
@@ -33,12 +34,31 @@ public class DepartmentsController {
     }
 
     @RequestMapping(value = "/add/department", method = RequestMethod.GET)
-    public String addCompetition(ModelMap map) {
+    public String addDepartmentGet(ModelMap map) {
         try {
-            map.addAttribute("DepartmentForm", new DepartmentForm());
+            map.addAttribute("departmentForm", new DepartmentForm());
             return "AddDepartment";
         } catch (Exception e) {
-            return "error";
+            return "Error";
         }
+    }
+
+    @RequestMapping(value = "/add/department", method = RequestMethod.POST)
+    public String addDepartmentPost(ModelMap map,
+                                 @ModelAttribute("departmentForm") DepartmentForm departmentForm) {
+        try {
+            saveDepartment(departmentForm);
+            return "redirect:Departments";
+        } catch (Exception e) {
+            return "Error";
+        }
+    }
+
+    private void saveDepartment(DepartmentForm departmentForm) throws Exception {
+        Department department = new Department();
+        department.setName(departmentForm.getName());
+        department.setAddress(departmentForm.getAddress());
+
+        departmentDAO.save(department);
     }
 }

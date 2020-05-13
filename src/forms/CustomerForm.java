@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 
 public class CustomerForm {
 
+    private Long customerId;
     private String name;
     private Customer.CustomerType type;
     private String surname;
@@ -25,6 +26,14 @@ public class CustomerForm {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {

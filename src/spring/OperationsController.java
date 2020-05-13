@@ -1,6 +1,7 @@
 package spring;
 
 import dao.*;
+import forms.*;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,12 @@ import java.util.List;
 public class OperationsController {
 
     @Autowired
-    private OperationsDAO operationsDAO;
+    private OperationDAO operationsDAO;
 
     @RequestMapping(value = "/operations", method = RequestMethod.GET)
-        public String getCompetitions(ModelMap map) {
+        public String Operations(ModelMap map) {
             try {
-                map.addAttribute("competitionsList", operationsDAO.getAll());
+                map.addAttribute("operationsList", operationsDAO.getAll());
                 return "Operations";
             } catch (Exception e) {
                 return "Error";
