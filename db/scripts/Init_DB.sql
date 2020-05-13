@@ -5,7 +5,7 @@ CREATE TYPE account_type AS ENUM('CORPORATE', 'STRICT', 'COMMON', 'LIGHT', 'RELI
 CREATE TABLE departments (
 	department_id SERIAL PRIMARY KEY,
 	name VARCHAR(64) NOT NULL,
-	adress VARCHAR(256) NOT NULL
+	address VARCHAR(256) NOT NULL
 );
 
 CREATE TABLE accounts (
@@ -48,7 +48,7 @@ CREATE TABLE contacts (
 	customer_id INTEGER,
 	name VARCHAR(32) NOT NULL,
 	surname VARCHAR(32) NOT NULL,
-	adress VARCHAR(256) NOT NULL,
+	address VARCHAR(256) NOT NULL,
 	phone_number VARCHAR(20) NOT NULL,
 	"email" VARCHAR(64) NOT NULL
 );

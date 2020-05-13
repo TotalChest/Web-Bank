@@ -1,26 +1,52 @@
 package model;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.util.HashSet;
-import java.util.Set;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "customers", schema = "public")
+@TypeDef(name = "pgsql_enum", typeClass = PSQLType.class)
+public class Customer {
 
-public class Customer extends BaseEntity {
+    public enum CustomerType {
+        INDIVIDUAL,
+        ORGANIZATION
+    }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id")
+    private Long customerId;
+
+    @Basic
+    @Column(name = "name", nullable = false, length = 64)
     private String name;
 
+    @Column(name = "date_of_registration", nullable = false)
     private Timestamp dateOfRegistration;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    @Type(type = "pgsql_enum")
     private CustomerType type;
 
-    private Set<Account> accountSet = new HashSet<>();
-
-    private Set<Contact> contactSet = new HashSet<>();
-
     public Customer() { };
+
+    public Customer(CustomerType type, String name, Timestamp dateOfRegistration) {
+        this.type = type;
+        this.name = name;
+        this.dateOfRegistration = dateOfRegistration;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
 
     public String getName() {
         return name;
@@ -44,22 +70,6 @@ public class Customer extends BaseEntity {
 
     public void setType(CustomerType type) {
         this.type = type;
-    }
-
-    public Set<Account> getAccountSet() {
-        return accountSet;
-    }
-
-    public void setAccountSet(Set<Account> accountSet) {
-        this.accountSet = accountSet;
-    }
-
-    public Set<Contact> getContactSet() {
-        return contactSet;
-    }
-
-    public void setContactSet(Set<Contact> contactSet) {
-        this.contactSet = contactSet;
     }
 
 }

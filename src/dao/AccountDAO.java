@@ -1,25 +1,11 @@
 package dao;
 
-import model.Account;
-import model.Customer;
-import model.TypeOfAccount;
-import model.Department;
+import model.*;
+import org.springframework.stereotype.Repository;
+import javax.transaction.Transactional;
 
-import java.sql.SQLException;
-import java.util.List;
+@Repository
+@Transactional
+public class AccountDAO extends GenericDAO<Account, Long> {
 
-
-public interface AccountDAO {
-
-    List getAllAccounts() throws SQLException;
-
-    Account getAccountById(Integer accountId) throws SQLException;
-
-    int addAccount(Account w) throws SQLException;
-
-    void updateAccount(Account w) throws SQLException;
-
-    void deleteAccount(Account w) throws SQLException;
-
-    void deleteAccountById(int id) throws SQLException;
 }

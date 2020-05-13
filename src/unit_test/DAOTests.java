@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DAOTests {
+    /*
     private DepartmentDAO departmentDAO = DAOFactory.getInstance().getDepartmentDAO();
     private AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
     private ContactDAO contactDAO = DAOFactory.getInstance().getContactDAO();
@@ -235,4 +236,6 @@ public class DAOTests {
     public void testDAOHelpersException() throws SQLException {
         DAOHelpers.ExecuteInSessionVoidRet(session -> session.getTransaction().rollback());
     }
+
+     */
 }

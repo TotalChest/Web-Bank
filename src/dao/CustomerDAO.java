@@ -1,21 +1,11 @@
 package dao;
 
-import model.Customer;
+import model.*;
+import org.springframework.stereotype.Repository;
+import javax.transaction.Transactional;
 
-import java.sql.SQLException;
-import java.util.List;
+@Repository
+@Transactional
+public class CustomerDAO extends GenericDAO<Customer, Long> {
 
-
-public interface CustomerDAO {
-    List getAllCustomers() throws SQLException;
-
-    Customer getCustomerById(Integer customerId) throws SQLException;
-
-    int addCustomer(Customer w) throws SQLException;
-
-    void updateCustomer(Customer w) throws SQLException;
-
-    void deleteCustomer(Customer w) throws SQLException;
-
-    void deleteCustomerById(int id) throws SQLException;
 }

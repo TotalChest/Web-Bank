@@ -1,9 +1,7 @@
 package spring.config;
 
 import dao.DepartmentDAO;
-import dao.impl.DepartmentDAOImpl;
-import model.Department;
-import dao.DAOFactory;
+//mport dao.impl.DepartmentDAOImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +13,6 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
 
 @Configuration
@@ -62,9 +58,10 @@ public class HibernateConfig {
     public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
         return new HibernateTransactionManager(sessionFactory);
     }
-*/
+
     @Bean(name = "DepartmentDAO")
     public DepartmentDAO DepartmentDAO() {
         return DAOFactory.getInstance().getDepartmentDAO();
     }
+    */
 }

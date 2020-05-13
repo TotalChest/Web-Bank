@@ -1,7 +1,7 @@
 package spring;
 
 import org.springframework.http.ResponseEntity;
-import org.apache.openjpa.jdbc.sql.SQLExceptions;
+//import org.apache.openjpa.jdbc.sql.SQLExceptions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;

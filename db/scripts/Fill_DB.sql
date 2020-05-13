@@ -1,4 +1,4 @@
-INSERT INTO departments (name, adress) VALUES
+INSERT INTO departments (name, address) VALUES
 	('Сбербанк Сходненская', 'г. Москва, ул. Свободы, 55'),
 	('Московский банк. Сбербанк', 'г. Москва, ул. Вавилова, 19'),
 	('Среднерусский банк. Сбербанк', 'г. Москва, ул. Большая Андроньевская, д. 8'),
@@ -23,7 +23,7 @@ INSERT INTO customers (type, name, date_of_registration) VALUES
 	('ORGANIZATION', 'ООО "Каршеринг Орбита"', '2013-12-04 08:11:01'),
 	('ORGANIZATION', 'Магазин одежды "Семья"', '2018-06-12 11:47:21');
 
-INSERT INTO contacts (customer_id, name, surname, adress, phone_number, "email") VALUES
+INSERT INTO contacts (customer_id, name, surname, address, phone_number, "email") VALUES
 	(1, 'Анатолий', 'Шевцов', 'Стандартная ул д. 21, корп.1, Москва', '89032344421', 'anatol_shev@gmail.com'),
 	(2, 'Ольга', 'Борисова', 'г. Москва, ул. Вавилова, 3', '+79005678901', 'borisova1@mail.ru'),
 	(3, 'Никита', 'Акимов', 'г. Москва,  Цветной бульвар д. 13, корп.3', '8(965)112-37-72', 'akimoww@gmail.com'),

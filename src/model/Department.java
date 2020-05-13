@@ -1,17 +1,38 @@
 package model;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
 
-public class Department extends BaseEntity {
+@Entity
+@Table(name = "departments", schema = "public")
+public class Department {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "department_id")
+    private Long departmentId;
+
+    @Basic
+    @Column(name = "name", nullable = false, length = 64)
     private String name;
 
-    private String adress;
-
-    private Set<Account> accountSet = new HashSet<>();
+    @Basic
+    @Column(name = "address", nullable = false, length = 256)
+    private String address;
 
     public Department() { };
+
+    public Department(String name, String address) {
+        this.address = address;
+        this.name = name;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
 
     public String getName() {
         return name;
@@ -20,20 +41,13 @@ public class Department extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
-    public String getAdress() {
-        return adress;
+
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public Set<Account> getAccountSet() {
-        return accountSet;
-    }
-
-    public void setAccountSet(Set<Account> accountSet) {
-        this.accountSet = accountSet;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }

@@ -1,31 +1,66 @@
 package model;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "accounts", schema = "public")
+public class Account {
 
-public class Account extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_id")
+    private Long accountId;
 
+    @Basic
+    @Column(name = "number", nullable = false, length = 10)
     private String number;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = true)
     private Customer customer;
 
+    @Basic
+    @Column(name = "balance", nullable = false)
     private Float balance;
 
+    @ManyToOne
+    @JoinColumn(name = "type_id", nullable = true)
     private TypeOfAccount type;
 
+    @ManyToOne
+    @JoinColumn(name = "interest_account", nullable = true)
     private Account interestAccount;
 
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = true)
     private Department department;
 
+    @Basic
+    @Column(name = "date_of_start", nullable = false)
     private Timestamp date;
 
-    private Set<Operation> operationSet = new HashSet<>();
-
-    private Set<Account> accountSet = new HashSet<>();
-
     public Account() { };
+
+    public Account(String number, Customer customer, Float balance,
+                   TypeOfAccount type, Account interestAccount, Department department,
+                    Timestamp date) {
+        this.customer = customer;
+        this.number = number;
+        this.balance = balance;
+        this.type = type;
+        this.interestAccount = interestAccount;
+        this.department = department;
+        this.date = date;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
 
     public String getNumber() {
         return number;
@@ -82,21 +117,5 @@ public class Account extends BaseEntity {
     public void setDate(Timestamp date)
     {
         this.date = date;
-    }
-
-    public Set<Operation> getOperationSet() {
-        return operationSet;
-    }
-
-    public void setOperationSet(Set<Operation> operationSet) {
-        this.operationSet = operationSet;
-    }
-
-    public Set<Account> getAccountSet() {
-        return accountSet;
-    }
-
-    public void setAccountSet(Set<Account> accountSet) {
-        this.accountSet = accountSet;
     }
 }
