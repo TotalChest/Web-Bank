@@ -1,0 +1,12 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name = "SystemSuite">
+    <test name = "SystemTest" parallel = "false">
+        <classes>
+            <class name ="system_test.AccountTest"/>
+            <class name="system_test.CustomerTest"/>
+            <class name="system_test.OtherTest"/>
+        </classes>
+    </test>
+</suite>

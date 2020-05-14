@@ -21,6 +21,8 @@ public class AccountsController {
     private AccountDAO accountDAO;
     @Autowired
     private CustomerDAO customerDAO;
+    @Autowired
+    private OperationDAO operationDAO;
 
     @RequestMapping(value = "/accounts", method = RequestMethod.GET)
     public String Accounts(ModelMap map) {
@@ -43,6 +45,7 @@ public class AccountsController {
             map.addAttribute("AccountInterest", a.getInterestAccount());
             map.addAttribute("AccountDepartment", a.getDepartment());
             map.addAttribute("AccountDate", a.getDate());
+            map.addAttribute("OperationList", operationDAO.getByAccount(id));
             return "CurrentAccount";
         } catch (Exception e) {
             return "Error";

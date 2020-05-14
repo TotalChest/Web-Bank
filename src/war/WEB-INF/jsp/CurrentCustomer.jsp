@@ -22,9 +22,31 @@
         </div>
 
         <div class="body_content">
-            <button class="button" onClick='location.href="${pageContext.request.contextPath}/change/customer"'>Редактировать</button>
             <div>Информация о клиенте номер ${id}</div>
-            <div>Список счетов клиента</div>
+            <table>
+                <tr>
+                    <th>Имя</th>
+                    <th>Тип</th>
+                    <th>Дата</th>
+                </tr>
+                <tr>
+                    <td>${CustomerName}</td>
+                    <td>${CustomerType}</td>
+                    <td>${CustomerDate}</td>
+                </tr>
+                <tr>
+                <div>Список счетов клиента</div>
+                </tr>
+                <c:forEach items="${AccountList}" var="account">
+                    <tr>
+                        <td> ${account.name}</td>
+                        <td> ${account.balance}</td>
+                        <td> ${account.type}</td>
+                        <td> ${account.department}</td>
+                        <td> ${account.date}</td>
+                    </tr>
+                </c:forEach>
+            </table>
         </div>
 
     </body>

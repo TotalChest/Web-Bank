@@ -21,6 +21,8 @@ public class CustomerController {
     private CustomerDAO customerDAO;
     @Autowired
     private ContactDAO contactDAO;
+    @Autowired
+    private AccountDAO accountDAO;
 
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     public String Customer(ModelMap map) {
@@ -39,6 +41,7 @@ public class CustomerController {
             map.addAttribute("CustomerName", c.getName());
             map.addAttribute("CustomerDate", c.getDateOfRegistration());
             map.addAttribute("CustomerType", c.getType());
+            map.addAttribute("AccountList", accountDAO.getByCustomer(id));
             return "CurrentCustomer";
         } catch (Exception e) {
             return "Error";

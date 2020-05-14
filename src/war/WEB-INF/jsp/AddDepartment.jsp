@@ -31,11 +31,11 @@
                     <table>
                         <tr>
                             <th>Название</th>
-                            <td><input class="in" type="text" name="name" required/></td>
+                            <td><input class="in" type="text" name="name" required value="${DepartmentForm.name}"/></td>
                         </tr>
                         <tr>
                             <th>Адрес</th>
-                            <td><input class="in" type="text" name="address" required/></td>
+                            <td><input class="in" type="text" name="address" required value="${DepartmentForm.address}"/></td>
                         </tr>
                     </table>
                 </div>

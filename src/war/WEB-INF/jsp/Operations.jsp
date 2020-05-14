@@ -39,24 +39,14 @@
                         <td>7000</td>
                         <td>23.11.19</td>
                     </tr>
-                    <tr>
-                        <td>89676776</td>
-                        <td>Списание</td>
-                        <td>7000</td>
-                        <td>23.11.19</td>
-                    </tr>
-                    <tr>
-                        <td>89676776</td>
-                        <td>Списание</td>
-                        <td>7000</td>
-                        <td>23.11.19</td>
-                    </tr>
-                    <tr>
-                        <td>89676776</td>
-                        <td>Списание</td>
-                        <td>7000</td>
-                        <td>23.11.19</td>
-                    </tr>
+                    <c:forEach items="${operationsList}" var="operation">
+                        <tr>
+                            <td>${operation.account}</td>
+                            <td>${operation.operation}</td>
+                            <td>${operation.amount}</td>
+                            <td>${operation.date}</td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
         </div>

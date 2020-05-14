@@ -30,27 +30,27 @@
                     <table>
                         <tr>
                             <th>Тип</th>
-                            <td><input class="in" type="text" name="type" required/></td>
+                            <td><input class="in" type="text" name="type" required value="${CustomerForm.type}"/></td>
                         </tr>
                         <tr>
                             <th>Имя</th>
-                            <td><input class="in" type="text" name="name" required/></td>
+                            <td><input class="in" type="text" name="name" required value="${CustomerForm.name}"/></td>
                         </tr>
                         <tr>
                             <th>Фамилия</th>
-                            <td><input class="in" type="text" name="surname" required/></td>
+                            <td><input class="in" type="text" name="surname" required value="${CustomerForm.surname}"/></td>
                         </tr>
                         <tr>
                             <th>Адрес</th>
-                            <td><input class="in" type="text" name="address" required/></td>
+                            <td><input class="in" type="text" name="address" required value="${CustomerForm.address}"/></td>
                         </tr>
                         <tr>
                             <th>Телефонный номер</th>
-                            <td><input class="in" type="text" name="phone_number" required/></td>
+                            <td><input class="in" type="text" name="phone_number" required value="${CustomerForm.phone_number}"/></td>
                         </tr>
                         <tr>
                             <th>Электронная почта</th>
-                            <td><input class="in" type="text" name="email" required/></td>
+                            <td><input class="in" type="text" name="email" required  value="${CustomerForm.email}"/></td>
                         </tr>
                     </table>
                 </div>

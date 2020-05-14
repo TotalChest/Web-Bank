@@ -39,18 +39,12 @@
                         <td>Сбербанк Алтуфьево</td>
                         <td>г. Москва, Череповецкая улица, 12</td>
                     </tr>
-                    <tr>
-                        <td>Сбербанк Алтуфьево</td>
-                        <td>г. Москва, Череповецкая улица, 12</td>
-                    </tr>
-                    <tr>
-                        <td>Сбербанк Алтуфьево</td>
-                        <td>г. Москва, Череповецкая улица, 12</td>
-                    </tr>
-                    <tr>
-                        <td>Сбербанк Алтуфьево</td>
-                        <td>г. Москва, Череповецкая улица, 12</td>
-                    </tr>
+                    <c:forEach items="${DepartmentList}" var="department">
+                        <tr>
+                            <td>${department.name}</td>
+                            <td>${department.address}</td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
         </div>

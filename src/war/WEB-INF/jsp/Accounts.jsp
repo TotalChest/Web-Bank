@@ -41,7 +41,12 @@
                 Таблица счетов
             </div>
             <div class="block">
-                <table>
+                <table id="AccountTable">
+                    <tr>
+                        <td><input type="text" id="number" class="search_icon" onkeyup="FilterFunction(0, id)" placeholder="Поиск по номеру"></td>
+                        <td><input type="text" id="type" class="search_icon" onkeyup="FilterFunction(1, id)" placeholder="Поиск по типу"></td>
+                        <td><input type="text" id="department" class="search_icon" onkeyup="FilterFunction(2, id)" placeholder="Поиск по отделению"></td>
+                    </tr>
                     <tr>
                         <th>Номер счета</th>
                         <th>Клиент</th>
@@ -58,33 +63,42 @@
                         <td>Сбербанк Алтуфьево</td>
                         <td>23.11.19</td>
                     </tr>
-                    <tr>
-                        <td>89676776</td>
-                        <td>Иванов</td>
-                        <td>20000</td>
-                        <td>LIGHT</td>
-                        <td>Сбербанк Алтуфьево</td>
-                        <td>23.11.19</td>
-                    </tr>
-                    <tr>
-                        <td>89676776</td>
-                        <td>Иванов</td>
-                        <td>20000</td>
-                        <td>LIGHT</td>
-                        <td>Сбербанк Алтуфьево</td>
-                        <td>23.11.19</td>
-                    </tr>
-                    <tr>
-                        <td>89676776</td>
-                        <td>Иванов</td>
-                        <td>20000</td>
-                        <td>LIGHT</td>
-                        <td>Сбербанк Алтуфьево</td>
-                        <td>23.11.19</td>
-                    </tr>
+                    <c:forEach items="${accountList}" var="account">
+                        <tr>
+                            <td>
+                                <a href="account?id=${account.accountId}">
+                                    ${account.number}
+                                </a>
+                            </td>
+                            <td> ${account.name}</td>
+                            <td> ${account.balance}</td>
+                            <td> ${account.type}</td>
+                            <td> ${account.department}</td>
+                            <td> ${account.date}</td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
         </div>
-
+        <script>
+            function FilterFunction(id, input) {
+                var real_input, filter, table, tr, td, i, txtValue;
+                real_input = document.getElementById(input);
+                filter = real_input.value.toUpperCase();
+                table = document.getElementById("AccountTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 2; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[id];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
     </body>
 </html>

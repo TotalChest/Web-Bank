@@ -41,7 +41,9 @@
                 Таблица клиентов
             </div>
             <div class="block">
-                <table>
+                <table id="CustomerTable">
+                    <td><input type="text" id="name" class="search_icon" onkeyup="FilterFunction(0, id)" placeholder="Поиск по имени"></td>
+                    <td><input type="text" id="type" class="search_icon" onkeyup="FilterFunction(1, id)" placeholder="Поиск по типу"></td>
                     <tr>
                         <th>Тип</th>
                         <th>Имя</th>
@@ -52,24 +54,40 @@
                         <td>Иванов</td>
                         <td>23.11.19</td>
                     </tr>
-                    <tr>
-                        <td>INDIVIDUAL</td>
-                        <td>Иванов</td>
-                        <td>23.11.19</td>
-                    </tr>
-                    <tr>
-                        <td>INDIVIDUAL</td>
-                        <td>Иванов</td>
-                        <td>23.11.19</td>
-                    </tr>
-                    <tr>
-                        <td>INDIVIDUAL</td>
-                        <td>Иванов</td>
-                        <td>23.11.19</td>
-                    </tr>
+                    <c:forEach items="${customerList}" var="customer">
+                        <tr>
+                            <td>
+                                <a href="customer?id=${customer.customerId}">
+                                    ${customer.name}
+                                </a>
+                            </td>
+                            <td> ${customer.type}</td>
+                            <td> ${customer.date}</td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
         </div>
+        <script>
+            function FilterFunction(id, input) {
+                var real_input, filter, table, tr, td, i, txtValue;
+                real_input = document.getElementById(input);
+                filter = real_input.value.toUpperCase();
+                table = document.getElementById("CustomerTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 2; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[id];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
 
     </body>
 </html>

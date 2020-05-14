@@ -23,10 +23,38 @@
 
         <div class="body_content">
             <div>Информация о счете номер ${id}</div>
-            <input type="text">
-            <button class="button" onClick='location.href=""'>Зачислить</button>
-            <button class="button" onClick='location.href=""'>Списать</button>
+            <table>
+                <tr>
+                    <th>Номер счета</th>
+                    <th>Клиент</th>
+                    <th>Баланс</th>
+                    <th>Тип</th>
+                    <th>Отделение</th>
+                    <th>Дата открытия</th>
+                </tr>
+                <tr>
+                    <td>${AccountCustomer.getName}</td>
+                    <td>${AccountNumber}</td>
+                    <td>${AccountBalance}</td>
+                    <td>${AccountType}</td>
+                    <td>${AccountInterest}</td>
+                    <td>${AccountDepartment}</td>
+                    <td>${AccountDate}</td>
+                </tr>
+            </table>
+            <input type="text" id="amount" class="in" placeholder="Сумма">
+            <button class="button" onClick='updateAmount(0, id)'>Зачислить</button>
+            <button class="button" onClick='updateAmount(1, id)'>Списать</button>
             <div>Список последних операций</div>
+            <table>
+                <c:forEach items="${OperationList}" var="operation">
+                    <tr>
+                        <td> ${operation.type}</td>
+                        <td> ${operation.amount}</td>
+                        <td> ${operation.date}</td>
+                    </tr>
+                </c:forEach>
+             </table>
         </div>
 
     </body>

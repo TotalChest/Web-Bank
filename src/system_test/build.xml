@@ -1,0 +1,25 @@
+<project basedir="." default="runtests" name="system-test">
+
+    <property file="../../build.properties"/>
+
+    <path id="classpath.test">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <pathelement location="${build.dir}"/>
+    </path>
+
+    <taskdef name="testng"
+             classname="org.testng.TestNGAntTask">
+        <classpath>
+            <pathelement location="${testng.classpath}"/>
+        </classpath>
+    </taskdef>
+
+    <target name="runtests">
+        <mkdir dir="${testreport.dir}"/>
+        <testng classpathref="classpath.test" outputdir="${testreport.dir}">
+            <xmlfileset dir="${system_test.dir}" includes="testng.xml"/>
+        </testng>
+    </target>
+</project>

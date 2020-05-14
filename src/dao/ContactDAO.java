@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class ContactDAO extends GenericDAO<Contact, Long> {
+
     @SuppressWarnings("unchecked")
     public List<Contact> getByCustomerId(Long id) {
         TypedQuery<Contact> query = getCurrentSession().createQuery(
